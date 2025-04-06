@@ -1,0 +1,13 @@
+bin/
+obj/
+
+.idea/
+*.sln.iml
+
+*.nupkg
+.nuget/
+
+*.user
+*.userosscache
+
+.DS_Store
