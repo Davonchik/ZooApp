@@ -1,6 +1,6 @@
 namespace ZooApp.Domain.ValueObjects;
 
-public class AnimalName
+public class AnimalName : IEquatable<AnimalName>
 {
     public string Value { get; private set; }
 

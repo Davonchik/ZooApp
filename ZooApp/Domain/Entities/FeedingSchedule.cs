@@ -19,8 +19,22 @@ public class FeedingSchedule
         IsCompleted = false;
     }
 
-    public void Complete()
+    /// <summary>
+    /// Method for rescheduling feeding time.
+    /// </summary>
+    /// <param name="newFeedingTime">New Feeding Time.</param>
+    public void Reschedule(DateTime newFeedingTime)
+    {
+        FeedingTime = new FeedingTime(newFeedingTime);
+        Console.WriteLine($"Feeding schedule {Id} fixed, new time: {FeedingTime}");
+    }
+
+    /// <summary>
+    /// Method for marking as completed.
+    /// </summary>
+    public void MarkAsCompleted()
     {
         IsCompleted = true;
+        Console.WriteLine($"Feeding schedule {Id} is completed!");
     }
 }

@@ -15,10 +15,7 @@ public class FeedingTime : IEquatable<FeedingTime>
 
     public bool Equals(FeedingTime other)
     {
-        if (other == null)
-        {
-            return false;
-        }
+        if (other == null) return false;
         return Value.Equals(other.Value);
     }
     
