@@ -4,7 +4,7 @@ namespace ZooApp.Application.Interfaces;
 
 public interface IFeedingScheduleRepository
 {
-    FeedingSchedule GetById(int id);
+    FeedingSchedule GetById(Guid id);
     IEnumerable<FeedingSchedule> GetAll();
     IEnumerable<FeedingSchedule> GetUpcoming(DateTime from);
     void Add(FeedingSchedule feedingSchedule);
