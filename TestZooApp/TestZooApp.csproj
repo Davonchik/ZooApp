@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ZooApp\ZooApp.csproj" />
+      <ProjectReference Include="..\ZooApplication\ZooApplication.csproj" />
     </ItemGroup>
 
 </Project>
