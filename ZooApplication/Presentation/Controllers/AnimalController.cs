@@ -53,11 +53,12 @@ public class AnimalController : ControllerBase
                 request.Gender,
                 request.FavoriteFood
             );
-            
-            if (request.EnclosureId != Guid.Empty)
-                animal.MoveToEnclosure(request.EnclosureId);
 
             _animalRepository.Add(animal);
+            
+            if (request.EnclosureId != Guid.Empty)
+                _transferService.TransferAnimal(animal.Id, request.EnclosureId);
+            
             return CreatedAtAction(nameof(GetById), new { id = animal.Id }, animal);
         }
         catch (Exception ex)

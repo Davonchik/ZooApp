@@ -17,31 +17,20 @@ public class AnimalTransferService
     public void TransferAnimal(Guid animalId, Guid targetEnclosureId)
     {
         var animal = _animalRepository.GetById(animalId);
-        if (animal == null)
-        {
-            throw new Exception("Animal not found!");
-        }
-        
+    
         var targetEnclosure = _enclosureRepository.GetById(targetEnclosureId);
-        if (targetEnclosure == null)
+
+        var old = _enclosureRepository.GetAll().FirstOrDefault(x => x.AnimalIds.Contains(animalId));
+    
+
+        if (old != null)
         {
-            throw new Exception("Target enclosure not found!");
+            old.RemoveAnimal(animal.Id);
+            _enclosureRepository.Update(old);
         }
 
-        if (animal.EnclosureId.HasValue)
-        {
-            var oldEnclosure = _enclosureRepository.GetById(animal.EnclosureId.Value);
-            if (oldEnclosure != null)
-            {
-                oldEnclosure.RemoveAnimal(animal.Id);
-                _enclosureRepository.Update(oldEnclosure);
-            }
-        }
-        
         targetEnclosure.AddAnimal(animal.Id);
+    
         _enclosureRepository.Update(targetEnclosure);
-        
-        animal.MoveToEnclosure(targetEnclosureId);
-        _animalRepository.Update(animal);
     }
 }

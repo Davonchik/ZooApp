@@ -19,10 +19,6 @@ public class FeedingOrganizationService
     public FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, string food)
     {
         var animal = _animalRepository.GetById(animalId);
-        if (animal == null)
-        {
-            throw new KeyNotFoundException("Animal not found!");
-        }
 
         var feedingTimeVo = new FeedingTime(feedingDate);
         var schedule = new FeedingSchedule(animalId, feedingTimeVo, food);

@@ -19,13 +19,19 @@ public enum Gender
 public class Animal
 {
     public Guid Id { get; private set; }
+    
     public AnimalName Name { get; private set; }
+    
     public string Species { get; private set; }
+    
     public DateTime BirthDate { get; private set; }
+    
     public Gender Gender { get; private set; }
+    
     public string FavoriteFood { get; private set; }
+    
     public HealthStatus HealthStatus { get; private set; }
-    public Guid? EnclosureId { get; private set; }
+    
     public List<IDomainEvent> DomainEvents { get; private set; } = new List<IDomainEvent>();
 
     public Animal(AnimalName name, string species, DateTime birthDate, Gender gender, string favoriteFood, 
@@ -58,21 +64,5 @@ public class Animal
             HealthStatus = HealthStatus.Healthy;
             Console.WriteLine($"Animal {Name} is healed.");
         }
-    }
-
-    /// <summary>
-    /// Moving animal method.
-    /// </summary>
-    /// <param name="enclosureId">Target Enclosure.</param>
-    /// <exception cref="InvalidOperationException">Exception.</exception>
-    public void MoveToEnclosure(Guid enclosureId)
-    {
-        if (EnclosureId == enclosureId)
-        {
-            throw new InvalidOperationException("Animal is already in another enclosure!");
-        }
-        var oldEnclosure = EnclosureId;
-        EnclosureId = enclosureId;
-        DomainEvents.Add(new AnimalMovedEvent(this, oldEnclosure, enclosureId));
     }
 }

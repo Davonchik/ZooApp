@@ -1,4 +1,5 @@
 using ZooApp.Application.Interfaces;
+using ZooApplication.Application.Dto;
 
 namespace ZooApp.Application.Services;
 
@@ -25,7 +26,7 @@ public class ZooStatisticsService
         
         var animalsByEnclosures = enclosures.ToDictionary(
             e => e.Name,
-            e => animals.Count(a => a.EnclosureId == e.Id)
+            e => e.CurrentAnimalCount
         );
 
         return new ZooStatisticsDto
@@ -36,12 +37,4 @@ public class ZooStatisticsService
             UpcomingFeedings = feedingSchedules.Count
         };
     }
-}
-
-public class ZooStatisticsDto
-{
-    public int TotalAnimals { get; set; }
-    public int TotalEnclosures { get; set; }
-    public Dictionary<string, int> AnimalsByEnclosure { get; set; }
-    public int UpcomingFeedings { get; set; }
 }

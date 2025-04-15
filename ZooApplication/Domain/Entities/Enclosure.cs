@@ -2,13 +2,14 @@ namespace ZooApp.Domain.Entities;
 
 public class Enclosure
 {
+    private readonly List<Guid> _animalIds = [];
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string EnclosureType { get; private set; } 
     public double Size { get; private set; }
     public int MaximumCapacity { get; private set; }
-    private readonly List<Guid> _animalIds = new List<Guid>();
     public DateTime LastCleaned { get; private set; } = DateTime.MinValue;
+    public IReadOnlyCollection<Guid> AnimalIds => _animalIds.AsReadOnly();
     public int CurrentAnimalCount => _animalIds.Count;
 
     public Enclosure(string enclosureType, double size, int maximumCapacity)
