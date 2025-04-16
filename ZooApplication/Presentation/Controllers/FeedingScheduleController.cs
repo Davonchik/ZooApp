@@ -1,106 +1,122 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
-using ZooApp.Application.Interfaces;
-using ZooApp.Application.Services;
+using ZooApplication.Application.Interfaces;
+using ZooApplication.Application.Services;
+using ZooApplication.Presentation.Models;
+using ZooApplication.Domain.Entities;
 
-namespace ZooApp.Presentation.Controllers;
-
-public class RescheduleFeedingRequest
+namespace ZooApplication.Presentation.Controllers
 {
-    public DateTime NewFeedingTime { get; set; }
-}
-
-// DTO для создания новой записи расписания кормления
-public class CreateFeedingScheduleRequest
-{
-    public Guid AnimalId { get; set; }
-    // Используем имя FeedingTime, чтобы отличать от резкейл-запроса
-    public DateTime FeedingTime { get; set; }
-    public string Food { get; set; }
-}
-
-[Route("api/[controller]")]
-[ApiController]
-public class FeedingScheduleController : ControllerBase
-{
-    private readonly IFeedingScheduleRepository _feedingScheduleRepository;
-    private readonly FeedingOrganizationService _feedingOrganizationService;
-
-    public FeedingScheduleController(
-        IFeedingScheduleRepository feedingScheduleRepository,
-        FeedingOrganizationService feedingOrganizationService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class FeedingScheduleController : ControllerBase
     {
-        _feedingScheduleRepository = feedingScheduleRepository;
-        _feedingOrganizationService = feedingOrganizationService;
-    }
+        private readonly IFeedingScheduleRepository _feedingScheduleRepository;
+        private readonly FeedingOrganizationService _feedingOrganizationService;
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_feedingScheduleRepository.GetAll());
-
-    [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        var schedule = _feedingScheduleRepository.GetById(id);
-        if (schedule == null)
+        public FeedingScheduleController(
+            IFeedingScheduleRepository feedingScheduleRepository,
+            FeedingOrganizationService feedingOrganizationService)
         {
-            return NotFound();
+            _feedingScheduleRepository = feedingScheduleRepository;
+            _feedingOrganizationService = feedingOrganizationService;
         }
 
-        return Ok(schedule);
-    }
+        [HttpGet]
+        public IActionResult GetAll() => Ok(_feedingScheduleRepository.GetAll());
 
-    [HttpPost]
-    public IActionResult Create([FromBody] CreateFeedingScheduleRequest request)
-    {
-        try
-        {
-            // Используем FeedingTime из запроса
-            var schedule = _feedingOrganizationService.ScheduleFeeding(request.AnimalId,
-                request.FeedingTime, request.Food);
-            return CreatedAtAction(nameof(GetById), new { id = schedule.Id }, schedule);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
-
-    [HttpPut("{id}/reschedule")]
-    public IActionResult Reschedule(Guid id, [FromBody] RescheduleFeedingRequest request)
-    {
-        try
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
         {
             var schedule = _feedingScheduleRepository.GetById(id);
-            if (schedule == null)
-            {
-                return NotFound();
-            }
-
-            schedule.Reschedule(request.NewFeedingTime);
             return Ok(schedule);
         }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
 
-    [HttpPost("{id}/complete")]
-    public IActionResult Complete(Guid id)
-    {
-        try
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateFeedingScheduleRequest request)
         {
-            var schedule = _feedingScheduleRepository.GetById(id);
-            if (schedule == null)
+            try
             {
-                return NotFound();
+                var schedule = _feedingOrganizationService.ScheduleFeeding(request.AnimalId,
+                    request.FeedingTime, request.Food);
+                return CreatedAtAction(nameof(GetById), new { id = schedule.Id }, schedule);
             }
-
-            schedule.MarkAsCompleted();
-            return Ok(schedule);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception e)
+
+        // Метод для перепланирования времени кормления
+        [HttpPut("{id}/reschedule")]
+        public IActionResult Reschedule(Guid id, [FromBody] RescheduleFeedingRequest request)
         {
-            return BadRequest(e.Message);
+            try
+            {
+                var schedule = _feedingScheduleRepository.GetById(id);
+                if (schedule == null)
+                    return NotFound();
+
+                schedule.Reschedule(request.NewFeedingTime);
+                return Ok(schedule);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // Метод для обновления типа пищи в расписании
+        [HttpPut("{id}")]
+        public IActionResult Update(Guid id, [FromBody] UpdateFeedingScheduleRequest request)
+        {
+            try
+            {
+                var schedule = _feedingScheduleRepository.GetById(id);
+
+                schedule.ChangeFood(request.Food);
+                _feedingScheduleRepository.Update(schedule);
+                return Ok(schedule);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
+        // Новый метод для удаления записи расписания кормления
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                var schedule = _feedingScheduleRepository.GetById(id);
+
+                _feedingScheduleRepository.Remove(schedule);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        
+        [HttpPost("{id}/complete")]
+        public IActionResult Complete(Guid id)
+        {
+            try
+            {
+                var schedule = _feedingScheduleRepository.GetById(id);
+                if (schedule == null)
+                    return NotFound();
+
+                schedule.MarkAsCompleted();
+                return Ok(schedule);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

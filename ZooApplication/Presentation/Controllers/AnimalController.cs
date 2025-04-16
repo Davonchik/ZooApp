@@ -1,20 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using ZooApp.Application.Interfaces;
-using ZooApp.Application.Services;
-using ZooApp.Domain.Entities;
-using ZooApp.Domain.ValueObjects;
+using ZooApplication.Application.Interfaces;
+using ZooApplication.Application.Services;
+using ZooApplication.Domain.Entities;
+using ZooApplication.Domain.ValueObjects;
+using ZooApplication.Presentation.Models;
 
-namespace ZooApp.Presentation.Controllers;
-
-public class CreateAnimalRequest
-{
-    public string Name { get; set; }
-    public string Species { get; set; }
-    public DateTime BirthDate { get; set; }
-    public Gender Gender { get; set; }
-    public string FavoriteFood { get; set; }
-    public Guid EnclosureId { get; set; }
-}
+namespace ZooApplication.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -36,8 +27,7 @@ public class AnimalController : ControllerBase
     public IActionResult GetById(Guid id)
     {
         var animal = _animalRepository.GetById(id);
-        if (animal == null)
-            return NotFound();
+        
         return Ok(animal);
     }
 
@@ -71,12 +61,27 @@ public class AnimalController : ControllerBase
     public IActionResult Delete(Guid id)
     {
         var animal = _animalRepository.GetById(id);
-        if (animal == null)
-        {
-            return NotFound();
-        }
+        
         _animalRepository.Remove(animal);
         return NoContent();
+    }
+    
+    [HttpPut("{id}")]
+    public IActionResult Update(Guid id, [FromBody] UpdateAnimalRequest request)
+    {
+        try
+        {
+            var animal = _animalRepository.GetById(id);
+            
+            animal.ChangeName(new AnimalName(request.Name));
+            _animalRepository.Update(animal);
+
+            return Ok(animal);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost("{id}/move")]

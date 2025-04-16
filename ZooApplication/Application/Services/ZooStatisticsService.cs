@@ -1,9 +1,9 @@
-using ZooApp.Application.Interfaces;
+using ZooApplication.Application.Interfaces;
 using ZooApplication.Application.Dto;
 
-namespace ZooApp.Application.Services;
+namespace ZooApplication.Application.Services;
 
-public class ZooStatisticsService
+public class ZooStatisticsService : IZooStatisticsService
 {
     private readonly IAnimalRepository _animalRepository;
     private readonly IEnclosureRepository _enclosureRepository;

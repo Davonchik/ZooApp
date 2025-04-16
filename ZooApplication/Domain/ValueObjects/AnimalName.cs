@@ -1,4 +1,4 @@
-namespace ZooApp.Domain.ValueObjects;
+namespace ZooApplication.Domain.ValueObjects;
 
 public class AnimalName : IEquatable<AnimalName>
 {

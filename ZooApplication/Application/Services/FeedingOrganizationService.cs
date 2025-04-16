@@ -1,10 +1,10 @@
-using ZooApp.Application.Interfaces;
-using ZooApp.Domain.Entities;
-using ZooApp.Domain.ValueObjects;
+using ZooApplication.Application.Interfaces;
+using ZooApplication.Domain.Entities;
+using ZooApplication.Domain.ValueObjects;
 
-namespace ZooApp.Application.Services;
+namespace ZooApplication.Application.Services;
 
-public class FeedingOrganizationService
+public class FeedingOrganizationService : IFeedingOrganizationService
 {
     private readonly IAnimalRepository _animalRepository;
     private readonly IFeedingScheduleRepository _feedingScheduleRepository;

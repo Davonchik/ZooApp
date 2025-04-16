@@ -1,6 +1,6 @@
-using ZooApp.Domain.Entities;
+using ZooApplication.Domain.Entities;
 
-namespace ZooApp.Application.Interfaces;
+namespace ZooApplication.Application.Interfaces;
 
 public interface IAnimalRepository
 {

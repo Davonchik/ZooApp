@@ -1,6 +1,6 @@
-using ZooApp.Domain.Entities;
+using ZooApplication.Domain.Entities;
 
-namespace ZooApp.Domain.Events;
+namespace ZooApplication.Domain.Events;
 
 public class AnimalMovedEvent : IDomainEvent
 {

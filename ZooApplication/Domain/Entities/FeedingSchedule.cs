@@ -1,6 +1,6 @@
-using ZooApp.Domain.ValueObjects;
+using ZooApplication.Domain.ValueObjects;
 
-namespace ZooApp.Domain.Entities;
+namespace ZooApplication.Domain.Entities;
 
 public class FeedingSchedule
 {
@@ -36,5 +36,10 @@ public class FeedingSchedule
     {
         IsCompleted = true;
         Console.WriteLine($"Feeding schedule {Id} is completed!");
+    }
+
+    public void ChangeFood(string food)
+    {
+        Food = food;
     }
 }

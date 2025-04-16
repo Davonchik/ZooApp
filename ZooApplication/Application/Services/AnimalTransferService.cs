@@ -1,9 +1,9 @@
-using ZooApp.Application.Interfaces;
-using ZooApp.Domain.Entities;
+using ZooApplication.Application.Interfaces;
+using ZooApplication.Domain.Entities;
 
-namespace ZooApp.Application.Services;
+namespace ZooApplication.Application.Services;
 
-public class AnimalTransferService
+public class AnimalTransferService : IAnimalTransferService
 {
     private readonly IAnimalRepository _animalRepository;
     private readonly IEnclosureRepository _enclosureRepository;

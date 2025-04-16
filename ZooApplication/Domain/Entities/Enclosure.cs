@@ -1,4 +1,4 @@
-namespace ZooApp.Domain.Entities;
+namespace ZooApplication.Domain.Entities;
 
 public class Enclosure
 {
@@ -61,5 +61,10 @@ public class Enclosure
     {
         LastCleaned = DateTime.UtcNow;
         Console.WriteLine($"Enclosure {Id} cleaned: {LastCleaned}.");
+    }
+
+    public void ChangeName(string name)
+    {
+        Name = name;
     }
 }

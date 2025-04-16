@@ -1,22 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using ZooApp.Application.Interfaces;
-using ZooApp.Application.Services;
-using ZooApp.Domain.Entities;
+using ZooApplication.Application.Interfaces;
+using ZooApplication.Application.Services;
+using ZooApplication.Domain.Entities;
+using ZooApplication.Presentation.Models;
 
-namespace ZooApp.Presentation.Controllers;
-
-// DTO для создания нового вольера.
-public class CreateEnclosureRequest
-{
-    // Тип вольера, например: "хищники", "травоядные", "птицы", "аквариум"
-    public string EnclosureType { get; set; }
-    
-    // Размер вольера (например, в квадратных метрах)
-    public double Size { get; set; }
-    
-    // Максимальное количество животных, которое может содержаться в вольере
-    public int MaximumCapacity { get; set; }
-}
+namespace ZooApplication.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -38,8 +26,7 @@ public class EnclosureController : ControllerBase
     public IActionResult GetById(Guid id)
     {
         var enclosure = _enclosureRepository.GetById(id);
-        if (enclosure == null)
-            return NotFound();
+        
         return Ok(enclosure);
     }
 
@@ -65,10 +52,27 @@ public class EnclosureController : ControllerBase
     public IActionResult Delete(Guid id)
     {
         var enclosure = _enclosureRepository.GetById(id);
-        if (enclosure == null)
-            return NotFound();
+        
         _enclosureRepository.Remove(enclosure);
         return NoContent();
+    }
+    
+    [HttpPut("{id}")]
+    public IActionResult Update(Guid id, [FromBody] UpdateEnclosureRequest request)
+    {
+        try
+        {
+            var enclosure = _enclosureRepository.GetById(id);
+            
+            enclosure.ChangeName(request.Name);
+            _enclosureRepository.Update(enclosure);
+
+            return Ok(enclosure);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     // POST: api/enclosure/{id}/clean
@@ -79,8 +83,6 @@ public class EnclosureController : ControllerBase
         try
         {
             var enclosure = _enclosureRepository.GetById(id);
-            if (enclosure == null)
-                return NotFound();
 
             enclosure.Clean(); // Метод Clean обновляет свойство LastCleaned.
             _enclosureRepository.Update(enclosure);

@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using ZooApp.Application.Interfaces;
-using ZooApp.Application.Services;
-using ZooApp.Infrastructure.Repositories;
+using ZooApplication.Application.Interfaces;
+using ZooApplication.Application.Services;
+using ZooApplication.Infrastructure.Repositories;
 
-namespace ZooApp.Infrastructure;
+namespace ZooApplication.Infrastructure;
 
 public static class DependencyInjection
 {

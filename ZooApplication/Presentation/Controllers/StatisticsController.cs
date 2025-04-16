@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using ZooApp.Application.Services;
+using ZooApplication.Application.Services;
 
-namespace ZooApp.Presentation.Controllers;
+namespace ZooApplication.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

@@ -1,3 +1,3 @@
-namespace ZooApp.Domain.Events;
+namespace ZooApplication.Domain.Events;
 
 public interface IDomainEvent { }

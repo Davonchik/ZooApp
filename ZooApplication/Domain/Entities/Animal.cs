@@ -1,8 +1,8 @@
-using ZooApp.Domain.Events;
-using ZooApp.Domain.ValueObjects;
-using ZooApp.Domain.ValueObjects;
+using ZooApplication.Domain.Events;
+using ZooApplication.Domain.ValueObjects;
+using ZooApplication.Domain.ValueObjects;
 
-namespace ZooApp.Domain.Entities;
+namespace ZooApplication.Domain.Entities;
 
 public enum HealthStatus
 {
@@ -64,5 +64,10 @@ public class Animal
             HealthStatus = HealthStatus.Healthy;
             Console.WriteLine($"Animal {Name} is healed.");
         }
+    }
+
+    public void ChangeName(AnimalName name)
+    {
+        Name = name;
     }
 }
