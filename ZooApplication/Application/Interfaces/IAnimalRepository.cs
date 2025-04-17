@@ -8,5 +8,5 @@ public interface IAnimalRepository
     IEnumerable<Animal> GetAll();
     void Add(Animal animal);
     void Remove(Animal animal);
-    void Update(Animal animal);
+    void Update(Animal newAnimalModel, Guid animalId);
 }

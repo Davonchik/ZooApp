@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(
+    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

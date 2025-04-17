@@ -14,5 +14,5 @@ public interface IFeedingScheduleRepository
     
     void Remove(FeedingSchedule feedingSchedule);
 
-    public void Update(FeedingSchedule feedingSchedule);
+    public void Update(FeedingSchedule newFeedingScheduleModel, Guid feedingScheduleId);
 }

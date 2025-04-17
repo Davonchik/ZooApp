@@ -1,41 +1,29 @@
 using ZooApplication.Domain.Events;
 using ZooApplication.Domain.ValueObjects;
-using ZooApplication.Domain.ValueObjects;
+using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.Entities;
 
-public enum HealthStatus
-{
-    Healthy,
-    Sick
-}
-
-public enum Gender
-{
-    Male,
-    Female
-}
-
 public class Animal
 {
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
     
-    public AnimalName Name { get; private set; }
+    public Name Name { get; private set; }
     
-    public string Species { get; private set; }
+    public AnimalType Species { get; set; }
     
     public DateTime BirthDate { get; private set; }
     
     public Gender Gender { get; private set; }
     
-    public string FavoriteFood { get; private set; }
+    public Food FavoriteFood { get; private set; }
     
     public HealthStatus HealthStatus { get; private set; }
     
     public List<IDomainEvent> DomainEvents { get; private set; } = new List<IDomainEvent>();
 
-    public Animal(AnimalName name, string species, DateTime birthDate, Gender gender, string favoriteFood, 
-        HealthStatus healthStatus = HealthStatus.Healthy)
+    public Animal(Name name, AnimalType species, DateTime birthDate, Gender gender, Food favoriteFood, 
+        HealthStatus healthStatusValue)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -43,7 +31,7 @@ public class Animal
         BirthDate = birthDate;
         Gender = gender;
         FavoriteFood = favoriteFood;
-        HealthStatus = healthStatus;
+        HealthStatus = healthStatusValue;
     }
 
     /// <summary>
@@ -59,15 +47,10 @@ public class Animal
     /// </summary>
     public void Heal()
     {
-        if (HealthStatus == HealthStatus.Sick)
+        if (HealthStatus.Value == HealthStatusValue.Sick)
         {
-            HealthStatus = HealthStatus.Healthy;
+            HealthStatus = new HealthStatus(HealthStatusValue.Healthy);
             Console.WriteLine($"Animal {Name} is healed.");
         }
-    }
-
-    public void ChangeName(AnimalName name)
-    {
-        Name = name;
     }
 }

@@ -16,11 +16,14 @@ public class InMemoryEnclosureRepository : IEnclosureRepository
     
     public void Remove(Enclosure enclosure) => _enclosures.Remove(enclosure);
 
-    public void Update(Enclosure enclosure)
+    public void Update(Enclosure newEnclosureModel, Guid enclosureId)
     {
-        var existing = _enclosures.FirstOrDefault(a => a.Id == enclosure.Id);
+        var existing = _enclosures.FirstOrDefault(a => a.Id == enclosureId);
         if (existing == null) 
-            throw new ArgumentException($"Enclosure with id: {enclosure.Id} does not exist!");
-        existing.ChangeName(enclosure.Name);
+            throw new ArgumentException($"Enclosure with id: {enclosureId} does not exist!");
+        
+        newEnclosureModel.Id = existing.Id;
+        _enclosures.Remove(existing);
+        _enclosures.Add(newEnclosureModel);
     }
 }

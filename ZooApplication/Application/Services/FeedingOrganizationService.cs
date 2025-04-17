@@ -16,7 +16,7 @@ public class FeedingOrganizationService : IFeedingOrganizationService
         _feedingScheduleRepository = feedingScheduleRepository;
     }
 
-    public FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, string food)
+    public FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, Food food)
     {
         var animal = _animalRepository.GetById(animalId);
 

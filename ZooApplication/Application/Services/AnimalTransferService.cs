@@ -20,17 +20,18 @@ public class AnimalTransferService : IAnimalTransferService
     
         var targetEnclosure = _enclosureRepository.GetById(targetEnclosureId);
 
+        if (animal.Species != targetEnclosure.EnclosureType)
+        {
+            throw new ArgumentException("Type mismatch!");
+        }
         var old = _enclosureRepository.GetAll().FirstOrDefault(x => x.AnimalIds.Contains(animalId));
     
 
         if (old != null)
         {
             old.RemoveAnimal(animal.Id);
-            _enclosureRepository.Update(old);
         }
 
-        targetEnclosure.AddAnimal(animal.Id);
-    
-        _enclosureRepository.Update(targetEnclosure);
+        targetEnclosure.AddAnimal(animal);
     }
 }

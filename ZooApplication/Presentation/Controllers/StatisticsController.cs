@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ZooApplication.Application.Services;
+using ZooApplication.Application.Interfaces;
 
 namespace ZooApplication.Presentation.Controllers;
 
@@ -7,9 +7,9 @@ namespace ZooApplication.Presentation.Controllers;
 [ApiController]
 public class StatisticsController : ControllerBase
 {
-    private readonly ZooStatisticsService _statisticsService;
+    private readonly IZooStatisticsService _statisticsService;
 
-    public StatisticsController(ZooStatisticsService statisticsService)
+    public StatisticsController(IZooStatisticsService statisticsService)
     {
         _statisticsService = statisticsService;
     }

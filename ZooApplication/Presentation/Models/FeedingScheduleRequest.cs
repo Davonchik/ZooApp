@@ -1,10 +1,12 @@
+using ZooApplication.Domain.ValueObjects;
+
 namespace ZooApplication.Presentation.Models;
 
-public class CreateFeedingScheduleRequest
+public class FeedingScheduleRequest
 {
     public Guid AnimalId { get; set; }
     
     public DateTime FeedingTime { get; set; }
     
-    public string Food { get; set; }
+    public Food Food { get; set; }
 }

@@ -19,11 +19,14 @@ public class InMemoryFeedingScheduleRepository : IFeedingScheduleRepository
     
     public void Remove(FeedingSchedule feedingSchedule) => _feedingSchedules.Remove(feedingSchedule);
 
-    public void Update(FeedingSchedule feedingSchedule)
+    public void Update(FeedingSchedule newFeedingScheduleModel, Guid feedingScheduleId)
     {
-        var existing = _feedingSchedules.FirstOrDefault(a => a.Id == feedingSchedule.Id);
+        var existing = _feedingSchedules.FirstOrDefault(a => a.Id == feedingScheduleId);
         if (existing == null)
             throw new KeyNotFoundException("Feeding schedule not found");
-        existing.ChangeFood(feedingSchedule.Food);
+        
+        newFeedingScheduleModel.Id = existing.Id;
+        _feedingSchedules.Remove(existing);
+        _feedingSchedules.Add(newFeedingScheduleModel);
     }
 }

@@ -17,9 +17,10 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<AnimalTransferService>();
-        services.AddScoped<FeedingOrganizationService>();
-        services.AddScoped<ZooStatisticsService>();
+        services.AddTransient<IAnimalService, AnimalService>();
+        services.AddScoped<IAnimalTransferService, AnimalTransferService>();
+        services.AddScoped<IFeedingOrganizationService, FeedingOrganizationService>();
+        services.AddScoped<IZooStatisticsService, ZooStatisticsService>();
         return services;
     }
 }

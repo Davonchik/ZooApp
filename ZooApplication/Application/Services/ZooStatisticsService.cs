@@ -20,12 +20,16 @@ public class ZooStatisticsService : IZooStatisticsService
     public ZooStatisticsDto GetZooStatistics()
     {
         var animals = _animalRepository.GetAll();
+        
         var enclosures = _enclosureRepository.GetAll();
+        
+        var emptyEnclosures = enclosures.Count(animal => animal.CurrentAnimalCount == 0);
+        
         var feedingSchedules = _feedingScheduleRepository.GetAll()
             .Where(f => f.FeedingTime.Value >= DateTime.UtcNow).ToList();
         
         var animalsByEnclosures = enclosures.ToDictionary(
-            e => e.Name,
+            e => e.Name.Value,
             e => e.CurrentAnimalCount
         );
 
@@ -33,6 +37,7 @@ public class ZooStatisticsService : IZooStatisticsService
         {
             TotalAnimals = animals.Count(),
             TotalEnclosures = enclosures.Count(),
+            EmptyEnclosures = emptyEnclosures,
             AnimalsByEnclosure = animalsByEnclosures,
             UpcomingFeedings = feedingSchedules.Count
         };

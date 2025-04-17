@@ -1,22 +1,24 @@
+using ZooApplication.Domain.Common;
+using ZooApplication.Domain.ValueObjects;
+
 namespace ZooApplication.Domain.Entities;
 
 public class Enclosure
 {
     private readonly List<Guid> _animalIds = [];
-    public Guid Id { get; private set; }
-    public string Name { get; private set; }
-    public string EnclosureType { get; private set; } 
-    public double Size { get; private set; }
-    public int MaximumCapacity { get; private set; }
-    public DateTime LastCleaned { get; private set; } = DateTime.MinValue;
+    public Guid Id { get; set; }
+    public Name Name { get; private set; }
+    public AnimalType EnclosureType { get; set; } 
+    public Capacity MaximumCapacity { get; private set; }
+    public DateTime LastCleaned { get; private set; } = DateTime.UtcNow;
     public IReadOnlyCollection<Guid> AnimalIds => _animalIds.AsReadOnly();
     public int CurrentAnimalCount => _animalIds.Count;
 
-    public Enclosure(string enclosureType, double size, int maximumCapacity)
+    public Enclosure(Name name, Capacity maximumCapacity, AnimalType enclosureType)
     {
         Id = Guid.NewGuid();
+        Name = name;
         EnclosureType = enclosureType;
-        Size = size;
         MaximumCapacity = maximumCapacity;
     }
 
@@ -25,19 +27,24 @@ public class Enclosure
     /// </summary>
     /// <param name="animalId">Animal`s ID.</param>
     /// <exception cref="InvalidOperationException">Exception.</exception>
-    public void AddAnimal(Guid animalId)
+    public void AddAnimal(Animal animal)
     {
-        if (CurrentAnimalCount >= MaximumCapacity)
+        if (animal.Species != EnclosureType)
+        {
+            throw new ArgumentException("Type mismatch!");
+        }
+        
+        if (CurrentAnimalCount >= MaximumCapacity.Value)
         {
             throw new InvalidOperationException("Cannot add more animals to enclosure!");
         }
 
-        if (_animalIds.Contains(animalId))
+        if (_animalIds.Contains(animal.Id))
         {
             throw new InvalidOperationException("Animal is already in this enclosure!");
         }
         
-        _animalIds.Add(animalId);
+        _animalIds.Add(animal.Id);
     }
 
     /// <summary>
@@ -61,10 +68,5 @@ public class Enclosure
     {
         LastCleaned = DateTime.UtcNow;
         Console.WriteLine($"Enclosure {Id} cleaned: {LastCleaned}.");
-    }
-
-    public void ChangeName(string name)
-    {
-        Name = name;
     }
 }

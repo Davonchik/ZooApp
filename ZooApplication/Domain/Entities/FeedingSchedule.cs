@@ -4,13 +4,13 @@ namespace ZooApplication.Domain.Entities;
 
 public class FeedingSchedule
 {
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
     public Guid AnimalId { get; private set; }
     public FeedingTime FeedingTime { get; private set; }
-    public string Food { get; private set; }
+    public Food Food { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    public FeedingSchedule(Guid animalId, FeedingTime feedingTime, string food)
+    public FeedingSchedule(Guid animalId, FeedingTime feedingTime, Food food)
     {
         Id = Guid.NewGuid();
         AnimalId = animalId;
@@ -36,10 +36,5 @@ public class FeedingSchedule
     {
         IsCompleted = true;
         Console.WriteLine($"Feeding schedule {Id} is completed!");
-    }
-
-    public void ChangeFood(string food)
-    {
-        Food = food;
     }
 }

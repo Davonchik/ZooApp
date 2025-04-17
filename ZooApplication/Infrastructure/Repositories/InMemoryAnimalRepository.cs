@@ -15,11 +15,15 @@ public class InMemoryAnimalRepository : IAnimalRepository
                                       throw new KeyNotFoundException("No animal was found");
     public void Remove(Animal animal) => _animals.Remove(animal);
 
-    public void Update(Animal animal)
+    public void Update(Animal newAnimalModel, Guid animalId)
     {
-        var existingAnimal = _animals.FirstOrDefault(a => a.Id == animal.Id);
+        var existingAnimal = _animals.FirstOrDefault(a => a.Id == animalId);
         if (existingAnimal == null)
-            throw new KeyNotFoundException($"No animal found with Id {animal.Id}");
-        existingAnimal.ChangeName(animal.Name);
+            throw new KeyNotFoundException($"No animal found with Id {animalId}");
+        
+        newAnimalModel.Id = existingAnimal.Id;
+        newAnimalModel.Species = existingAnimal.Species;
+        _animals.Remove(existingAnimal);
+        _animals.Add(newAnimalModel);
     }
 }

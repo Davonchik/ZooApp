@@ -1,9 +1,6 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using ZooApplication.Application.Interfaces;
-using ZooApplication.Application.Services;
 using ZooApplication.Presentation.Models;
-using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Presentation.Controllers
 {
@@ -12,11 +9,11 @@ namespace ZooApplication.Presentation.Controllers
     public class FeedingScheduleController : ControllerBase
     {
         private readonly IFeedingScheduleRepository _feedingScheduleRepository;
-        private readonly FeedingOrganizationService _feedingOrganizationService;
+        private readonly IFeedingOrganizationService _feedingOrganizationService;
 
         public FeedingScheduleController(
             IFeedingScheduleRepository feedingScheduleRepository,
-            FeedingOrganizationService feedingOrganizationService)
+            IFeedingOrganizationService feedingOrganizationService)
         {
             _feedingScheduleRepository = feedingScheduleRepository;
             _feedingOrganizationService = feedingOrganizationService;
@@ -33,7 +30,7 @@ namespace ZooApplication.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateFeedingScheduleRequest request)
+        public IActionResult Create([FromBody] FeedingScheduleRequest request)
         {
             try
             {
@@ -46,8 +43,7 @@ namespace ZooApplication.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        // Метод для перепланирования времени кормления
+        
         [HttpPut("{id}/reschedule")]
         public IActionResult Reschedule(Guid id, [FromBody] RescheduleFeedingRequest request)
         {
@@ -68,14 +64,14 @@ namespace ZooApplication.Presentation.Controllers
 
         // Метод для обновления типа пищи в расписании
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, [FromBody] UpdateFeedingScheduleRequest request)
+        public IActionResult Update(Guid id, [FromBody] FeedingScheduleRequest request)
         {
             try
             {
-                var schedule = _feedingScheduleRepository.GetById(id);
-
-                schedule.ChangeFood(request.Food);
-                _feedingScheduleRepository.Update(schedule);
+                var schedule = _feedingOrganizationService.ScheduleFeeding(request.AnimalId,
+                    request.FeedingTime, request.Food);
+                
+                _feedingScheduleRepository.Update(schedule, id);
                 return Ok(schedule);
             }
             catch (Exception e)

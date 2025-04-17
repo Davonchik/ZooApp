@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ZooApplication.Application.Interfaces;
-using ZooApplication.Application.Services;
+using ZooApplication.Domain.Common;
 using ZooApplication.Domain.Entities;
+using ZooApplication.Domain.ValueObjects;
 using ZooApplication.Presentation.Models;
 
 namespace ZooApplication.Presentation.Controllers;
@@ -11,10 +12,12 @@ namespace ZooApplication.Presentation.Controllers;
 public class EnclosureController : ControllerBase
 {
     private readonly IEnclosureRepository _enclosureRepository;
+    private readonly IEnclosureService _enclosureService;
 
-    public EnclosureController(IEnclosureRepository enclosureRepository)
+    public EnclosureController(IEnclosureRepository enclosureRepository, IEnclosureService enclosureService)
     {
         _enclosureRepository = enclosureRepository;
+        _enclosureService = enclosureService;
     }
 
     // GET: api/enclosure
@@ -32,12 +35,11 @@ public class EnclosureController : ControllerBase
 
     // POST: api/enclosure
     [HttpPost]
-    public IActionResult Create([FromBody] CreateEnclosureRequest request)
+    public IActionResult Create([FromBody] EnclosureRequest request)
     {
         try
         {
-            // Создаём вольер согласно переданным данным.
-            var enclosure = new Enclosure(request.EnclosureType, request.Size, request.MaximumCapacity);
+            var enclosure = new Enclosure(request.Name, new Capacity(request.MaximumCapacity), request.EnclosureType);
             _enclosureRepository.Add(enclosure);
             return CreatedAtAction(nameof(GetById), new { id = enclosure.Id }, enclosure);
         }
@@ -51,21 +53,18 @@ public class EnclosureController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(Guid id)
     {
-        var enclosure = _enclosureRepository.GetById(id);
-        
-        _enclosureRepository.Remove(enclosure);
+        _enclosureService.DeleteEnclosure(id);
         return NoContent();
     }
     
     [HttpPut("{id}")]
-    public IActionResult Update(Guid id, [FromBody] UpdateEnclosureRequest request)
+    public IActionResult Update(Guid id, [FromBody] EnclosureRequest request)
     {
         try
         {
-            var enclosure = _enclosureRepository.GetById(id);
+            var enclosure = new Enclosure(request.Name, new Capacity(request.MaximumCapacity), request.EnclosureType);
             
-            enclosure.ChangeName(request.Name);
-            _enclosureRepository.Update(enclosure);
+            _enclosureRepository.Update(enclosure, id);
 
             return Ok(enclosure);
         }
@@ -84,8 +83,7 @@ public class EnclosureController : ControllerBase
         {
             var enclosure = _enclosureRepository.GetById(id);
 
-            enclosure.Clean(); // Метод Clean обновляет свойство LastCleaned.
-            _enclosureRepository.Update(enclosure);
+            enclosure.Clean();
             return Ok(enclosure);
         }
         catch (Exception ex)

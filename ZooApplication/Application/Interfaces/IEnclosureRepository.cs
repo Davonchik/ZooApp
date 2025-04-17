@@ -8,5 +8,5 @@ public interface IEnclosureRepository
     IEnumerable<Enclosure> GetAll();
     void Add(Enclosure enclosure);
     void Remove(Enclosure enclosure);
-    void Update(Enclosure enclosure);
+    void Update(Enclosure newEnclosureModel, Guid enclosureId);
 }
