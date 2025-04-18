@@ -13,7 +13,7 @@ public interface IFeedingOrganizationService
 
     FeedingSchedule Reschedule(Guid id, DateTime newFeedingTime);
     
-    FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, Food food);
+    FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, string food);
 
     void UpdateSchedule(FeedingSchedule newScheduleModel, Guid scheduleId);
 

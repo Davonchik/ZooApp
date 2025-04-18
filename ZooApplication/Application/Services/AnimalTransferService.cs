@@ -27,7 +27,7 @@ public class AnimalTransferService : IAnimalTransferService
         var old = _enclosureRepository.GetAll().FirstOrDefault(x => x.AnimalIds.Contains(animalId));
     
 
-        if (old != null)
+        if (old != null && old.MaximumCapacity.Value + 1 < targetEnclosure.MaximumCapacity.Value)
         {
             old.RemoveAnimal(animal.Id);
         }

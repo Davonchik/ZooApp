@@ -40,20 +40,17 @@ public class EnclosureService : IEnclosureService
     public void DeleteEnclosure(Guid enclosureId)
     {
         var enclosure = _enclosureRepository.GetById(enclosureId);
-
-        if (enclosure != null)
-        {
-            var animals = enclosure.AnimalIds;
-            foreach (var animal in animals)
-            {
-                _animalService.DeleteAnimal(animal);
-            }
-            _enclosureRepository.Remove(enclosure);
-        }
-        else
-        {
+        if (enclosure == null)
             throw new Exception("Enclosure not found!");
+        
+        var animalsCopy = enclosure.AnimalIds.ToList();
+
+        foreach (var animalId in animalsCopy)
+        {
+            _animalService.DeleteAnimal(animalId);
         }
+
+        _enclosureRepository.Remove(enclosure);
     }
     
     public Enclosure CleanEnclosure(Guid id)

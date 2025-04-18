@@ -39,14 +39,19 @@ public class FeedingOrganizationService : IFeedingOrganizationService
         _feedingScheduleRepository.Update(newScheduleModel, scheduleId);
     }
 
-    public FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, Food food)
+    public FeedingSchedule ScheduleFeeding(Guid animalId, DateTime feedingDate, string food)
     {
         var animal = _animalRepository.GetById(animalId);
 
         var feedingTimeVo = new FeedingTime(feedingDate);
-        var schedule = new FeedingSchedule(animalId, feedingTimeVo, food);
-        _feedingScheduleRepository.Add(schedule);
-        return schedule;
+        var foodVo = new Food(
+            new Name(food),
+            new AnimalType(animal.Species.Value)
+        );
+
+        var schedule = new FeedingSchedule(animalId, feedingTimeVo, foodVo);
+
+        return CreateFeedingSchedule(schedule);
     }
     
     public void DeleteSchedule(Guid id)

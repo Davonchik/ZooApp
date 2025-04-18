@@ -8,5 +8,5 @@ public class FeedingScheduleRequest
     
     public DateTime FeedingTime { get; set; }
     
-    public Food Food { get; set; }
+    public string Food { get; set; }
 }

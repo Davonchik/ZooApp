@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ZooApplication.Application.Interfaces;
+using ZooApplication.Domain.Common;
+using ZooApplication.Domain.Entities;
+using ZooApplication.Domain.ValueObjects;
 using ZooApplication.Presentation.Models;
 
 namespace ZooApplication.Presentation.Controllers
@@ -64,11 +67,16 @@ namespace ZooApplication.Presentation.Controllers
         {
             try
             {
-                var schedule = _feedingOrganizationService.ScheduleFeeding(request.AnimalId,
-                    request.FeedingTime, request.Food);
-                
-                _feedingOrganizationService.UpdateSchedule(schedule, id);
-                return Ok(schedule);
+                var newModel = new FeedingSchedule(
+                    request.AnimalId,
+                    new FeedingTime(request.FeedingTime),
+                    new Food(new Name(request.Food), new AnimalType(AnimalTypeValue.Default))
+                );
+                // 2. Делегируем обновление сервису
+                _feedingOrganizationService.UpdateSchedule(newModel, id);
+                // 3. Возвращаем уже «перезаписанную» запись
+                var updated = _feedingOrganizationService.GetById(id);
+                return Ok(updated);
             }
             catch (Exception e)
             {
