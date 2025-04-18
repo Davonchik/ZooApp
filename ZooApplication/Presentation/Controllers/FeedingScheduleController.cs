@@ -8,24 +8,20 @@ namespace ZooApplication.Presentation.Controllers
     [ApiController]
     public class FeedingScheduleController : ControllerBase
     {
-        private readonly IFeedingScheduleRepository _feedingScheduleRepository;
         private readonly IFeedingOrganizationService _feedingOrganizationService;
 
-        public FeedingScheduleController(
-            IFeedingScheduleRepository feedingScheduleRepository,
-            IFeedingOrganizationService feedingOrganizationService)
+        public FeedingScheduleController(IFeedingOrganizationService feedingOrganizationService)
         {
-            _feedingScheduleRepository = feedingScheduleRepository;
             _feedingOrganizationService = feedingOrganizationService;
         }
 
         [HttpGet]
-        public IActionResult GetAll() => Ok(_feedingScheduleRepository.GetAll());
+        public IActionResult GetAll() => Ok(_feedingOrganizationService.GetAll());
 
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
-            var schedule = _feedingScheduleRepository.GetById(id);
+            var schedule = _feedingOrganizationService.GetById(id);
             return Ok(schedule);
         }
 
@@ -49,7 +45,7 @@ namespace ZooApplication.Presentation.Controllers
         {
             try
             {
-                var schedule = _feedingScheduleRepository.GetById(id);
+                var schedule = _feedingOrganizationService.GetById(id);
                 if (schedule == null)
                     return NotFound();
 
@@ -71,7 +67,7 @@ namespace ZooApplication.Presentation.Controllers
                 var schedule = _feedingOrganizationService.ScheduleFeeding(request.AnimalId,
                     request.FeedingTime, request.Food);
                 
-                _feedingScheduleRepository.Update(schedule, id);
+                _feedingOrganizationService.UpdateSchedule(schedule, id);
                 return Ok(schedule);
             }
             catch (Exception e)
@@ -86,9 +82,7 @@ namespace ZooApplication.Presentation.Controllers
         {
             try
             {
-                var schedule = _feedingScheduleRepository.GetById(id);
-
-                _feedingScheduleRepository.Remove(schedule);
+                _feedingOrganizationService.DeleteSchedule(id);
                 return NoContent();
             }
             catch (Exception e)
@@ -102,7 +96,7 @@ namespace ZooApplication.Presentation.Controllers
         {
             try
             {
-                var schedule = _feedingScheduleRepository.GetById(id);
+                var schedule = _feedingOrganizationService.GetById(id);
                 if (schedule == null)
                     return NotFound();
 

@@ -10,6 +10,14 @@ public class AnimalService : IAnimalService
     private readonly IEnclosureRepository _enclosureRepository;
     private readonly IAnimalTransferService _transferService;
 
+    public AnimalService(IAnimalRepository animalRepository, IEnclosureRepository enclosureRepository,
+        IAnimalTransferService transferService)
+    {
+        _animalRepository = animalRepository;
+        _enclosureRepository = enclosureRepository;
+        _transferService = transferService;
+    }
+
     public IEnumerable<Animal> GetAll()
     {
         return _animalRepository.GetAll();

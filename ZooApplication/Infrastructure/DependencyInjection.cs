@@ -19,6 +19,7 @@ public static class DependencyInjection
     {
         services.AddTransient<IAnimalService, AnimalService>();
         services.AddScoped<IAnimalTransferService, AnimalTransferService>();
+        services.AddScoped<IEnclosureService, EnclosureService>();
         services.AddScoped<IFeedingOrganizationService, FeedingOrganizationService>();
         services.AddScoped<IZooStatisticsService, ZooStatisticsService>();
         return services;

@@ -11,27 +11,20 @@ namespace ZooApplication.Presentation.Controllers;
 [ApiController]
 public class EnclosureController : ControllerBase
 {
-    private readonly IEnclosureRepository _enclosureRepository;
     private readonly IEnclosureService _enclosureService;
 
-    public EnclosureController(IEnclosureRepository enclosureRepository, IEnclosureService enclosureService)
+    public EnclosureController(IEnclosureService enclosureService)
     {
-        _enclosureRepository = enclosureRepository;
         _enclosureService = enclosureService;
     }
 
     // GET: api/enclosure
     [HttpGet]
-    public IActionResult GetAll() => Ok(_enclosureRepository.GetAll());
+    public IActionResult GetAll() => Ok(_enclosureService.GetAll());
 
     // GET: api/enclosure/{id}
     [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        var enclosure = _enclosureRepository.GetById(id);
-        
-        return Ok(enclosure);
-    }
+    public IActionResult GetById(Guid id) => Ok(_enclosureService.GetById(id));
 
     // POST: api/enclosure
     [HttpPost]
@@ -40,8 +33,8 @@ public class EnclosureController : ControllerBase
         try
         {
             var enclosure = new Enclosure(request.Name, new Capacity(request.MaximumCapacity), request.EnclosureType);
-            _enclosureRepository.Add(enclosure);
-            return CreatedAtAction(nameof(GetById), new { id = enclosure.Id }, enclosure);
+            var created = _enclosureService.CreateEnclosure(enclosure);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
         catch (Exception ex)
         {
@@ -64,7 +57,7 @@ public class EnclosureController : ControllerBase
         {
             var enclosure = new Enclosure(request.Name, new Capacity(request.MaximumCapacity), request.EnclosureType);
             
-            _enclosureRepository.Update(enclosure, id);
+            _enclosureService.UpdateEnclosure(id, enclosure);
 
             return Ok(enclosure);
         }
@@ -81,10 +74,8 @@ public class EnclosureController : ControllerBase
     {
         try
         {
-            var enclosure = _enclosureRepository.GetById(id);
-
-            enclosure.Clean();
-            return Ok(enclosure);
+            var cleaned = _enclosureService.CleanEnclosure(id);
+            return Ok(cleaned);
         }
         catch (Exception ex)
         {
