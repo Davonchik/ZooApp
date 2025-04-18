@@ -20,7 +20,7 @@ public class AnimalTransferService : IAnimalTransferService
     
         var targetEnclosure = _enclosureRepository.GetById(targetEnclosureId);
 
-        if (animal.Species != targetEnclosure.EnclosureType)
+        if (animal.Species.Value != targetEnclosure.EnclosureType.Value)
         {
             throw new ArgumentException("Type mismatch!");
         }

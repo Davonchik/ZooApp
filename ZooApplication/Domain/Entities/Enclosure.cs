@@ -29,7 +29,7 @@ public class Enclosure
     /// <exception cref="InvalidOperationException">Exception.</exception>
     public void AddAnimal(Animal animal)
     {
-        if (animal.Species != EnclosureType)
+        if (animal.Species.Value != EnclosureType.Value)
         {
             throw new ArgumentException("Type mismatch!");
         }

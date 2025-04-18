@@ -12,7 +12,7 @@ public class AnimalRequest
     
     public string FavoriteFood { get; set; }
     
-    public Guid EnclosureId { get; set; }
+    //public Guid EnclosureId { get; set; }
     
     public HealthStatusValue HealthStatus { get; set; }
 }
