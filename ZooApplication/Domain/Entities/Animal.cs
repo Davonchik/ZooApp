@@ -7,8 +7,6 @@ namespace ZooApplication.Domain.Entities;
 
 public class Animal : EventEntity
 {
-    private readonly ILogger<FeedingTimeEvent> _logger;
-    
     public Guid Id { get; set; }
     
     public Name Name { get; private set; }
@@ -38,21 +36,22 @@ public class Animal : EventEntity
     /// <summary>
     /// Feeding animal method.
     /// </summary>
-    public void Feed()
+    public bool Feed()
     {
-        _logger.LogInformation($"Feeding animal {Id}.");
+        return true;
     }
 
     /// <summary>
     /// Healing animal method.
     /// </summary>
-    public void Heal()
+    public bool Heal()
     {
         if (HealthStatus.Value == HealthStatusValue.Sick)
         {
             HealthStatus = new HealthStatus(HealthStatusValue.Healthy);
-            Console.WriteLine($"Animal {Name} is healed.");
+            return true;
         }
+        return false;
     }
     
     internal void AddMoveToEnclosureEvent(Animal animal, Guid oldEnclosureId, Guid newEnclosureId)

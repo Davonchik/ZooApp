@@ -26,7 +26,6 @@ public class FeedingSchedule
     public void Reschedule(DateTime newFeedingTime)
     {
         FeedingTime = new FeedingTime(newFeedingTime);
-        Console.WriteLine($"Feeding schedule {Id} fixed, new time: {FeedingTime}");
     }
 
     /// <summary>
@@ -35,6 +34,5 @@ public class FeedingSchedule
     public void MarkAsCompleted()
     {
         IsCompleted = true;
-        Console.WriteLine($"Feeding schedule {Id} is completed!");
     }
 }

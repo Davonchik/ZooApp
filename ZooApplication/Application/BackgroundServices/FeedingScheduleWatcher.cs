@@ -29,8 +29,8 @@ public class FeedingScheduleWatcher : BackgroundService
             {
                 _domainEventDispatcher.Dispatch([new FeedingTimeEvent(time)]);
             }
+            
+            await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
         }
-        
-        await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
     }
 }
