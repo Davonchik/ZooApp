@@ -2,6 +2,9 @@ using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Application.Interfaces;
 
+/// <summary>
+/// Interface of Feeding Schedule Repository.
+/// </summary>
 public interface IFeedingScheduleRepository
 {
     FeedingSchedule GetById(Guid id);

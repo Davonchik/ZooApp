@@ -3,6 +3,9 @@ using ZooApplication.Domain.ValueObjects;
 
 namespace ZooApplication.Application.Interfaces;
 
+/// <summary>
+/// Interface of Feeding Organization Service.
+/// </summary>
 public interface IFeedingOrganizationService
 {
     IEnumerable<FeedingSchedule> GetAll();

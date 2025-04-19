@@ -1,5 +1,8 @@
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// Capacity Value Object.
+/// </summary>
 public class Capacity : IEquatable<Capacity>
 {
     public int Value { get; private set; }

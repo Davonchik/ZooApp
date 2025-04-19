@@ -3,6 +3,9 @@ using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Application.Services;
 
+/// <summary>
+/// Animal Transfer Service.
+/// </summary>
 public class AnimalTransferService : IAnimalTransferService
 {
     private readonly IAnimalRepository _animalRepository;
@@ -17,6 +20,12 @@ public class AnimalTransferService : IAnimalTransferService
         _domainEventDispatcher = domainEventDispatcher;
     }
 
+    /// <summary>
+    /// Method for animal moving.
+    /// </summary>
+    /// <param name="animalId">Animal's ID.</param>
+    /// <param name="targetEnclosureId">Target Enclosure's ID.</param>
+    /// <exception cref="ArgumentException">Exception.</exception>
     public void TransferAnimal(Guid animalId, Guid targetEnclosureId)
     {
         var animal = _animalRepository.GetById(animalId);

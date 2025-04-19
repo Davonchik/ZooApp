@@ -4,6 +4,9 @@ using ZooApplication.Domain.Events;
 
 namespace ZooApplication.Application.Dispatcher;
 
+/// <summary>
+/// Dispatcher for Domain Events.
+/// </summary>
 public class DomainEventDispatcher : IDomainEventDispatcher
 {
     private readonly IMediator _mediator;

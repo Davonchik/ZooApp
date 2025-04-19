@@ -2,6 +2,9 @@ using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Application.Interfaces;
 
+/// <summary>
+/// Interface of Animal Service.
+/// </summary>
 public interface IAnimalService
 {
     IEnumerable<Animal> GetAll();

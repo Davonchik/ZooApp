@@ -2,6 +2,9 @@ using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Application.Interfaces;
 
+/// <summary>
+/// Interface of Enclosure Repository.
+/// </summary>
 public interface IEnclosureRepository
 {
     Enclosure GetById(Guid id);

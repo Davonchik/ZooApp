@@ -18,15 +18,12 @@ public class EnclosureController : ControllerBase
         _enclosureService = enclosureService;
     }
 
-    // GET: api/enclosure
     [HttpGet]
     public IActionResult GetAll() => Ok(_enclosureService.GetAll());
 
-    // GET: api/enclosure/{id}
     [HttpGet("{id}")]
     public IActionResult GetById(Guid id) => Ok(_enclosureService.GetById(id));
 
-    // POST: api/enclosure
     [HttpPost]
     public IActionResult Create([FromBody] EnclosureRequest request)
     {
@@ -41,8 +38,7 @@ public class EnclosureController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    // DELETE: api/enclosure/{id}
+    
     [HttpDelete("{id}")]
     public IActionResult Delete(Guid id)
     {
@@ -66,9 +62,7 @@ public class EnclosureController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    // POST: api/enclosure/{id}/clean
-    // Выполняет уборку в вольере, обновляя дату последней уборки.
+    
     [HttpPost("{id}/clean")]
     public IActionResult Clean(Guid id)
     {

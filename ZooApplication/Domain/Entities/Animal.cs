@@ -5,6 +5,9 @@ using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.Entities;
 
+/// <summary>
+/// Animal entity.
+/// </summary>
 public class Animal : EventEntity
 {
     public Guid Id { get; set; }
@@ -54,6 +57,12 @@ public class Animal : EventEntity
         return false;
     }
     
+    /// <summary>
+    /// Move Event Method.
+    /// </summary>
+    /// <param name="animal">Animal.</param>
+    /// <param name="oldEnclosureId">Old Enclosure's ID.</param>
+    /// <param name="newEnclosureId">New Enclosure's ID.</param>
     internal void AddMoveToEnclosureEvent(Animal animal, Guid oldEnclosureId, Guid newEnclosureId)
     {
         AddDomainEvent(new AnimalMovedEvent(animal, oldEnclosureId, newEnclosureId));

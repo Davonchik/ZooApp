@@ -2,6 +2,9 @@ using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// HealthStatus Value Object.
+/// </summary>
 public class HealthStatus : IEquatable<HealthStatus>
 {
     public HealthStatusValue Value { get; private set; }

@@ -7,8 +7,16 @@ using ZooApplication.Infrastructure.Repositories;
 
 namespace ZooApplication.Infrastructure;
 
+/// <summary>
+/// Extension methods to register Infrastructure and Application services into DI.
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Registers all Infrastructure‑layer dependencies.
+    /// </summary>
+    /// <param name="services">Services.</param>
+    /// <returns>IServiceCollection.</returns>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddSingleton<IAnimalRepository, InMemoryAnimalRepository>();
@@ -20,6 +28,11 @@ public static class DependencyInjection
         return services;
     }
 
+    /// <summary>
+    /// Registers all Application‑layer services.
+    /// </summary>
+    /// <param name="services">Services.</param>
+    /// <returns>IServiceCollection.</returns>
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddTransient<IAnimalService, AnimalService>();

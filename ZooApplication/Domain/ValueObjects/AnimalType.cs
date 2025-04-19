@@ -2,6 +2,9 @@ using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// AnimalType Value Object.
+/// </summary>
 public class AnimalType : IEquatable<AnimalType>
 {
     public AnimalTypeValue Value { get; private set; }

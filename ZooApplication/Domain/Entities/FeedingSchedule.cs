@@ -2,6 +2,9 @@ using ZooApplication.Domain.ValueObjects;
 
 namespace ZooApplication.Domain.Entities;
 
+/// <summary>
+/// Feeding Schedule entity.
+/// </summary>
 public class FeedingSchedule
 {
     public Guid Id { get; set; }

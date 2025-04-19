@@ -2,6 +2,9 @@ using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Presentation.Models;
 
+/// <summary>
+/// Animal Request Model.
+/// </summary>
 public class AnimalRequest
 {
     public string Name { get; set; }
@@ -11,8 +14,6 @@ public class AnimalRequest
     public GenderValue GenderValue { get; set; }
     
     public string FavoriteFood { get; set; }
-    
-    //public Guid EnclosureId { get; set; }
     
     public HealthStatusValue HealthStatus { get; set; }
 }

@@ -2,6 +2,9 @@ using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Application.Interfaces;
 
+/// <summary>
+/// Interface of Enclosure Service.
+/// </summary>
 public interface IEnclosureService
 {
     IEnumerable<Enclosure> GetAll();

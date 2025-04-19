@@ -3,6 +3,9 @@ using ZooApplication.Domain.ValueObjects;
 
 namespace ZooApplication.Presentation.Models;
 
+/// <summary>
+/// Enclosure Request Model.
+/// </summary>
 public class EnclosureRequest
 {
     public Name Name { get; set; }

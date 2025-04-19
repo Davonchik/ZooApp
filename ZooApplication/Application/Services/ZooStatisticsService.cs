@@ -3,6 +3,9 @@ using ZooApplication.Application.Dto;
 
 namespace ZooApplication.Application.Services;
 
+/// <summary>
+/// Zoo Statistics Service.
+/// </summary>
 public class ZooStatisticsService : IZooStatisticsService
 {
     private readonly IAnimalRepository _animalRepository;
@@ -17,6 +20,10 @@ public class ZooStatisticsService : IZooStatisticsService
         _feedingScheduleRepository = feedingScheduleRepository;
     }
 
+    /// <summary>
+    /// Method for getting Zoo Statistics.
+    /// </summary>
+    /// <returns>Zoo Statistics DTO.</returns>
     public ZooStatisticsDto GetZooStatistics()
     {
         var animals = _animalRepository.GetAll();

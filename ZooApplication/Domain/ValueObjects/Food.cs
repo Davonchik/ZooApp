@@ -2,6 +2,9 @@ using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// Food Value Object.
+/// </summary>
 public class Food : IEquatable<Food>
 {
     public Name Name { get; set; }

@@ -2,6 +2,9 @@ using ZooApplication.Domain.ValueObjects;
 
 namespace ZooApplication.Application.Dto;
 
+/// <summary>
+/// Zoo Statistics DTO.
+/// </summary>
 public class ZooStatisticsDto
 {
     public int TotalAnimals { get; set; }

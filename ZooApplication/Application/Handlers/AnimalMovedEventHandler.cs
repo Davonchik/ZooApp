@@ -3,6 +3,9 @@ using ZooApplication.Domain.Events;
 
 namespace ZooApplication.Application.Handlers;
 
+/// <summary>
+/// Handler for Animal Moved Event.
+/// </summary>
 public class AnimalMovedEventHandler : INotificationHandler<AnimalMovedEvent>
 {
     private readonly ILogger<AnimalMovedEventHandler> _logger;

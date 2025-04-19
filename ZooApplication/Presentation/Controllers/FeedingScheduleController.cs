@@ -60,8 +60,7 @@ namespace ZooApplication.Presentation.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-        // Метод для обновления типа пищи в расписании
+        
         [HttpPut("{id}")]
         public IActionResult Update(Guid id, [FromBody] FeedingScheduleRequest request)
         {
@@ -72,9 +71,9 @@ namespace ZooApplication.Presentation.Controllers
                     new FeedingTime(request.FeedingTime),
                     new Food(new Name(request.Food), new AnimalType(AnimalTypeValue.Default))
                 );
-                // 2. Делегируем обновление сервису
+                
                 _feedingOrganizationService.UpdateSchedule(newModel, id);
-                // 3. Возвращаем уже «перезаписанную» запись
+                
                 var updated = _feedingOrganizationService.GetById(id);
                 return Ok(updated);
             }
@@ -84,7 +83,6 @@ namespace ZooApplication.Presentation.Controllers
             }
         }
         
-        // Новый метод для удаления записи расписания кормления
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {

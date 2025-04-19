@@ -1,5 +1,8 @@
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// Name Value Object.
+/// </summary>
 public class Name : IEquatable<Name>
 {
     public string Value { get; private set; }

@@ -1,5 +1,8 @@
 namespace ZooApplication.Domain.Common;
 
+/// <summary>
+/// Enum - Types of Animals.
+/// </summary>
 public enum AnimalTypeValue
 {
     Predator = 1,

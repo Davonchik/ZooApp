@@ -2,6 +2,9 @@ using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// Gender Value Object.
+/// </summary>
 public class Gender : IEquatable<Gender>
 {
     public GenderValue Value { get; private set; }

@@ -1,5 +1,8 @@
 namespace ZooApplication.Domain.ValueObjects;
 
+/// <summary>
+/// FeedingTime Value Object.
+/// </summary>
 public class FeedingTime : IEquatable<FeedingTime>
 {
     public DateTime Value { get; private set; }

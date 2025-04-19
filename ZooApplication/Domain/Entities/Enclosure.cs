@@ -4,6 +4,9 @@ using ZooApplication.Domain.ValueObjects;
 
 namespace ZooApplication.Domain.Entities;
 
+/// <summary>
+/// Enclosure entity.
+/// </summary>
 public class Enclosure : EventEntity
 {
     private readonly List<Guid> _animalIds = [];

@@ -2,6 +2,9 @@ using ZooApplication.Domain.Entities;
 
 namespace ZooApplication.Domain.Events;
 
+/// <summary>
+/// Animal Moved Event.
+/// </summary>
 public class AnimalMovedEvent : IDomainEvent
 {
     public Animal Animal { get; private set; }

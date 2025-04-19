@@ -5,6 +5,9 @@ using ZooApplication.Domain.Events;
 
 namespace ZooApplication.Application.Handlers;
 
+/// <summary>
+/// Handler for Feeding Time Event.
+/// </summary>
 public class FeedingTimeEventHandler : INotificationHandler<FeedingTimeEvent>
 {
     private readonly IAnimalRepository _animalRepository;
