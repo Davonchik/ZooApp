@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace ZooApplication.Domain.Events;
 
-public interface IDomainEvent { }
+public interface IDomainEvent : INotification { }

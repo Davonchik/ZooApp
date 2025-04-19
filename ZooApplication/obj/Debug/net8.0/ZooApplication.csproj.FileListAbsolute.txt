@@ -32,3 +32,5 @@
 /Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/obj/Debug/net8.0/ZooApplication.pdb
 /Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/obj/Debug/net8.0/ZooApplication.genruntimeconfig.cache
 /Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/obj/Debug/net8.0/ref/ZooApplication.dll
+/Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/bin/Debug/net8.0/MediatR.dll
+/Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/bin/Debug/net8.0/MediatR.Contracts.dll

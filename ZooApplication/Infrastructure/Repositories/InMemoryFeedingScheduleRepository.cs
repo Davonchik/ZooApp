@@ -22,6 +22,7 @@ public class InMemoryFeedingScheduleRepository : IFeedingScheduleRepository
     public void Update(FeedingSchedule newFeedingScheduleModel, Guid feedingScheduleId)
     {
         var existing = _feedingSchedules.FirstOrDefault(a => a.Id == feedingScheduleId);
+        
         if (existing == null)
             throw new KeyNotFoundException("Feeding schedule not found");
         

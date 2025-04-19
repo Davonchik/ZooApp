@@ -36,6 +36,8 @@ public class FeedingOrganizationService : IFeedingOrganizationService
     
     public void UpdateSchedule(FeedingSchedule newScheduleModel, Guid scheduleId)
     {
+        _animalRepository.GetById(newScheduleModel.AnimalId);
+        
         _feedingScheduleRepository.Update(newScheduleModel, scheduleId);
     }
 

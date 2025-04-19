@@ -9,13 +9,15 @@ public class AnimalService : IAnimalService
     private readonly IAnimalRepository _animalRepository;
     private readonly IEnclosureRepository _enclosureRepository;
     private readonly IAnimalTransferService _transferService;
+    private readonly IFeedingScheduleRepository _feedingScheduleRepository;
 
     public AnimalService(IAnimalRepository animalRepository, IEnclosureRepository enclosureRepository,
-        IAnimalTransferService transferService)
+        IAnimalTransferService transferService, IFeedingScheduleRepository feedingScheduleRepository)
     {
         _animalRepository = animalRepository;
         _enclosureRepository = enclosureRepository;
         _transferService = transferService;
+        _feedingScheduleRepository = feedingScheduleRepository;
     }
 
     public IEnumerable<Animal> GetAll()
@@ -38,6 +40,7 @@ public class AnimalService : IAnimalService
         catch (Exception ex)
         {
             _animalRepository.Remove(animal);
+            throw;
         }
         return true;
     }
@@ -71,9 +74,14 @@ public class AnimalService : IAnimalService
     {
         var animal = _animalRepository.GetById(id);
         var enclosure = _enclosureRepository.GetAll().FirstOrDefault(enclosure => enclosure.AnimalIds.Contains(id));
+        var currentSchedule = _feedingScheduleRepository.GetAll()
+            .FirstOrDefault(schedule => schedule.AnimalId == id);
         
         if (enclosure != null)
             enclosure.RemoveAnimal(id);
+        
+        if (currentSchedule != null)
+            _feedingScheduleRepository.Remove(currentSchedule);
         
         _animalRepository.Remove(animal);
     }

@@ -7,11 +7,14 @@ public class AnimalTransferService : IAnimalTransferService
 {
     private readonly IAnimalRepository _animalRepository;
     private readonly IEnclosureRepository _enclosureRepository;
+    private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-    public AnimalTransferService(IAnimalRepository animalRepository, IEnclosureRepository enclosureRepository)
+    public AnimalTransferService(IAnimalRepository animalRepository, IEnclosureRepository enclosureRepository,
+        IDomainEventDispatcher domainEventDispatcher)
     {
         _animalRepository = animalRepository;
         _enclosureRepository = enclosureRepository;
+        _domainEventDispatcher = domainEventDispatcher;
     }
 
     public void TransferAnimal(Guid animalId, Guid targetEnclosureId)
@@ -27,11 +30,14 @@ public class AnimalTransferService : IAnimalTransferService
         var old = _enclosureRepository.GetAll().FirstOrDefault(x => x.AnimalIds.Contains(animalId));
     
 
-        if (old != null && old.MaximumCapacity.Value + 1 < targetEnclosure.MaximumCapacity.Value)
+        if (old != null && targetEnclosure.CurrentAnimalCount + 1 <= targetEnclosure.MaximumCapacity.Value)
         {
             old.RemoveAnimal(animal.Id);
+            animal.AddMoveToEnclosureEvent(animal, old.Id, targetEnclosureId);
         }
 
         targetEnclosure.AddAnimal(animal);
+        _domainEventDispatcher.Dispatch(animal.DomainEvents);
+        animal.ClearDomainEvents();
     }
 }

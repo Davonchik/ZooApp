@@ -1,9 +1,10 @@
 using ZooApplication.Domain.Common;
+using ZooApplication.Domain.Events;
 using ZooApplication.Domain.ValueObjects;
 
 namespace ZooApplication.Domain.Entities;
 
-public class Enclosure
+public class Enclosure : EventEntity
 {
     private readonly List<Guid> _animalIds = [];
     public Guid Id { get; set; }

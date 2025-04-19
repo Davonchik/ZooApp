@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using ZooApplication.Application.BackgroundServices;
+using ZooApplication.Application.Dispatcher;
 using ZooApplication.Application.Interfaces;
 using ZooApplication.Application.Services;
 using ZooApplication.Infrastructure.Repositories;
@@ -12,6 +14,9 @@ public static class DependencyInjection
         services.AddSingleton<IAnimalRepository, InMemoryAnimalRepository>();
         services.AddSingleton<IEnclosureRepository, InMemoryEnclosureRepository>();
         services.AddSingleton<IFeedingScheduleRepository, InMemoryFeedingScheduleRepository>();
+        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+        services.AddHostedService<FeedingScheduleWatcher>();
         return services;
     }
 

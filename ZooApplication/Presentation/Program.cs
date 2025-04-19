@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
+builder.Logging.AddConsole();
 
 builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(
     new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));

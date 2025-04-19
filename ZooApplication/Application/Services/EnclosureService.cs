@@ -32,8 +32,17 @@ public class EnclosureService : IEnclosureService
     
     public Enclosure UpdateEnclosure(Guid id, Enclosure updatedModel)
     {
-        var before = _enclosureRepository.GetById(id);
+        var animalsIds = _enclosureRepository.GetById(id).AnimalIds.ToList();
+            
         _enclosureRepository.Update(updatedModel, id);
+            
+        var newEnclosure = _enclosureRepository.GetById(id);
+            
+        foreach (var animalId in animalsIds)
+        {
+            newEnclosure.AddAnimal(_animalService.GetById(animalId));
+        }
+            
         return _enclosureRepository.GetById(id);
     }
     

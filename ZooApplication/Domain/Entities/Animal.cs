@@ -1,11 +1,14 @@
+using ZooApplication.Application.Handlers;
 using ZooApplication.Domain.Events;
 using ZooApplication.Domain.ValueObjects;
 using ZooApplication.Domain.Common;
 
 namespace ZooApplication.Domain.Entities;
 
-public class Animal
+public class Animal : EventEntity
 {
+    private readonly ILogger<FeedingTimeEvent> _logger;
+    
     public Guid Id { get; set; }
     
     public Name Name { get; private set; }
@@ -19,8 +22,6 @@ public class Animal
     public Food FavoriteFood { get; private set; }
     
     public HealthStatus HealthStatus { get; private set; }
-    
-    public List<IDomainEvent> DomainEvents { get; private set; } = new List<IDomainEvent>();
 
     public Animal(Name name, AnimalType species, DateTime birthDate, Gender gender, Food favoriteFood, 
         HealthStatus healthStatusValue)
@@ -39,7 +40,7 @@ public class Animal
     /// </summary>
     public void Feed()
     {
-        Console.WriteLine($"Animal {Name} is feeded.");
+        _logger.LogInformation($"Feeding animal {Id}.");
     }
 
     /// <summary>
@@ -52,5 +53,10 @@ public class Animal
             HealthStatus = new HealthStatus(HealthStatusValue.Healthy);
             Console.WriteLine($"Animal {Name} is healed.");
         }
+    }
+    
+    internal void AddMoveToEnclosureEvent(Animal animal, Guid oldEnclosureId, Guid newEnclosureId)
+    {
+        AddDomainEvent(new AnimalMovedEvent(animal, oldEnclosureId, newEnclosureId));
     }
 }

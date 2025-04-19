@@ -19,8 +19,17 @@ public class InMemoryEnclosureRepository : IEnclosureRepository
     public void Update(Enclosure newEnclosureModel, Guid enclosureId)
     {
         var existing = _enclosures.FirstOrDefault(a => a.Id == enclosureId);
+        
         if (existing == null) 
             throw new ArgumentException($"Enclosure with id: {enclosureId} does not exist!");
+        
+        if (existing.CurrentAnimalCount > newEnclosureModel.MaximumCapacity.Value)
+            throw new ArgumentException("Cannot make it so small - there are to many animals!");
+
+        if (newEnclosureModel.EnclosureType.Value != existing.EnclosureType.Value &&
+            existing.CurrentAnimalCount > 0)
+            throw new ArgumentException("There are already animals with another type!");
+            
         
         newEnclosureModel.Id = existing.Id;
         _enclosures.Remove(existing);
