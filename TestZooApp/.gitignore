@@ -2,14 +2,24 @@ bin/
 obj/
 
 .idea/
-*.sln.iml
+.idea.*
+*.DotSettings.user
 
 TestResults/
+*.trx
+*.coverage
+*.cobertura.xml
 
-*.nupkg
-.nuget/
+coverage-report/
+coverage/
+**/coverage*/          # на случай вложенных каталогов
+*.html                  # если отчёт сгенерён в корне
 
+.vscode/
 *.user
-*.userosscache
+*.suo
 
-.DS_Store
+packages/
+
+*.log
+*.log.*
