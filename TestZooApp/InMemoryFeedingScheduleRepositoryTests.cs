@@ -59,8 +59,8 @@ public class InMemoryFeedingScheduleRepositoryTests
     {
         // Arrange
         var animal = Guid.NewGuid();
-        var soon  = MakeSchedule(animal,  5);
-        var near  = MakeSchedule(animal, 20);
+        var soon = MakeSchedule(animal, 5);
+        var near = MakeSchedule(animal, 20);
         var later = MakeSchedule(animal, 60);
         _repo.Add(soon);
         _repo.Add(near);
@@ -74,7 +74,7 @@ public class InMemoryFeedingScheduleRepositoryTests
         // Assert
         Assert.DoesNotContain(soon, upcoming);
         Assert.DoesNotContain(near, upcoming);
-        Assert.Contains(later,      upcoming);
+        Assert.Contains(later, upcoming);
         Assert.Single(upcoming);
     }
 

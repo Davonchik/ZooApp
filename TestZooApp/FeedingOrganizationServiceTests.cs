@@ -9,15 +9,15 @@ namespace TestZooApp;
 
 public class FeedingOrganizationServiceTests
 {
-    private readonly Mock<IAnimalRepository>           _animalRepo;
+    private readonly Mock<IAnimalRepository> _animalRepo;
     private readonly Mock<IFeedingScheduleRepository> _schedRepo;
-    private readonly FeedingOrganizationService        _svc;
+    private readonly FeedingOrganizationService _svc;
 
     public FeedingOrganizationServiceTests()
     {
         _animalRepo = new Mock<IAnimalRepository>();
-        _schedRepo  = new Mock<IFeedingScheduleRepository>();
-        _svc        = new FeedingOrganizationService(
+        _schedRepo = new Mock<IFeedingScheduleRepository>();
+        _svc = new FeedingOrganizationService(
             _animalRepo.Object,
             _schedRepo.Object
         );
@@ -104,7 +104,7 @@ public class FeedingOrganizationServiceTests
         );
 
         // Act & Assert
-        var ex = Assert.Throws<ApplicationException>(() => 
+        var ex = Assert.Throws<ApplicationException>(() =>
             _svc.CreateFeedingSchedule(duplicate)
         );
         Assert.Equal("Feeding schedule already exists", ex.Message);

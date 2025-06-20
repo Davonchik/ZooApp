@@ -14,13 +14,13 @@ public class AnimalController : ControllerBase
     private readonly IAnimalTransferService _transferService;
     private readonly IAnimalService _animalService;
 
-    public AnimalController(IAnimalTransferService transferService, 
+    public AnimalController(IAnimalTransferService transferService,
         IAnimalService animalService)
     {
         _transferService = transferService;
         _animalService = animalService;
     }
-    
+
     [HttpGet]
     public IActionResult GetAll() => Ok(_animalService.GetAll());
 
@@ -28,7 +28,7 @@ public class AnimalController : ControllerBase
     public IActionResult GetById(Guid id)
     {
         var animal = _animalService.GetById(id);
-        
+
         return Ok(animal);
     }
 
@@ -43,7 +43,7 @@ public class AnimalController : ControllerBase
             new Food(new Name(request.FavoriteFood), new AnimalType(request.Species)),
             new HealthStatus(request.HealthStatus)
         );
-        
+
         try
         {
             _animalService.CreateAnimal(animal, request.EnclosureId);
@@ -61,7 +61,7 @@ public class AnimalController : ControllerBase
         _animalService.DeleteAnimal(id);
         return NoContent();
     }
-    
+
     [HttpPut("{id}")]
     public IActionResult Update(Guid id, [FromBody] AnimalRequest request)
     {
@@ -75,7 +75,7 @@ public class AnimalController : ControllerBase
                 new Food(new Name(request.FavoriteFood), new AnimalType(AnimalTypeValue.Default)),
                 new HealthStatus(request.HealthStatus)
             );
-            
+
             _animalService.UpdateAnimal(animal, id);
 
             return Ok(animal);

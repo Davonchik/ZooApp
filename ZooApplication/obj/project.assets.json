@@ -597,11 +597,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/ZooApplication.csproj",
+      "projectUniqueName": "/Users/dgaslanian/Desktop/ZooApp1/ZooApplication/ZooApplication.csproj",
       "projectName": "ZooApplication",
-      "projectPath": "/Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/ZooApplication.csproj",
+      "projectPath": "/Users/dgaslanian/Desktop/ZooApp1/ZooApplication/ZooApplication.csproj",
       "packagesPath": "/Users/dgaslanian/.nuget/packages/",
-      "outputPath": "/Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/obj/",
+      "outputPath": "/Users/dgaslanian/Desktop/ZooApp1/ZooApplication/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/dgaslanian/.nuget/NuGet/NuGet.Config"

@@ -18,7 +18,7 @@ public class FeedingTimeEventTests
             new FeedingTime(feedingTime),
             new Food(new Name("Bananas"), new AnimalType(AnimalTypeValue.Default))
         );
-            
+
         // Act
         var before = DateTime.UtcNow;
         var evt = new FeedingTimeEvent(schedule);

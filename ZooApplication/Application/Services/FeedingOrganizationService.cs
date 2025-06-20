@@ -12,19 +12,19 @@ public class FeedingOrganizationService : IFeedingOrganizationService
     private readonly IAnimalRepository _animalRepository;
     private readonly IFeedingScheduleRepository _feedingScheduleRepository;
 
-    public FeedingOrganizationService(IAnimalRepository animalRepository, 
+    public FeedingOrganizationService(IAnimalRepository animalRepository,
         IFeedingScheduleRepository feedingScheduleRepository)
     {
         _animalRepository = animalRepository;
         _feedingScheduleRepository = feedingScheduleRepository;
     }
-    
+
     /// <summary>
     /// Method for getting all Feeding Schedules.
     /// </summary>
     /// <returns>IEnumerable of Feeding Schedules.</returns>
     public IEnumerable<FeedingSchedule> GetAll() => _feedingScheduleRepository.GetAll();
-    
+
     /// <summary>
     /// Method for getting Feeding Schedule by ID.
     /// </summary>
@@ -39,14 +39,14 @@ public class FeedingOrganizationService : IFeedingOrganizationService
     /// <returns>Feeding Schedule.</returns>
     public FeedingSchedule CreateFeedingSchedule(FeedingSchedule feedingSchedule)
     {
-        if (_feedingScheduleRepository.GetAll().Any(a => a.FeedingTime.Value == 
+        if (_feedingScheduleRepository.GetAll().Any(a => a.FeedingTime.Value ==
                                                          feedingSchedule.FeedingTime.Value
             && a.AnimalId == feedingSchedule.AnimalId))
             throw new ApplicationException("Feeding schedule already exists");
         _feedingScheduleRepository.Add(feedingSchedule);
         return feedingSchedule;
     }
-    
+
     /// <summary>
     /// Method for rescheduling.
     /// </summary>
@@ -60,7 +60,7 @@ public class FeedingOrganizationService : IFeedingOrganizationService
         _feedingScheduleRepository.Update(schedule, id);
         return schedule;
     }
-    
+
     /// <summary>
     /// Method for Schedule Info updating.
     /// </summary>
@@ -69,7 +69,7 @@ public class FeedingOrganizationService : IFeedingOrganizationService
     public void UpdateSchedule(FeedingSchedule newScheduleModel, Guid scheduleId)
     {
         _animalRepository.GetById(newScheduleModel.AnimalId);
-        
+
         _feedingScheduleRepository.Update(newScheduleModel, scheduleId);
     }
 
@@ -94,7 +94,7 @@ public class FeedingOrganizationService : IFeedingOrganizationService
 
         return CreateFeedingSchedule(schedule);
     }
-    
+
     /// <summary>
     /// Method for Schedule deletion.
     /// </summary>
@@ -104,7 +104,7 @@ public class FeedingOrganizationService : IFeedingOrganizationService
         var existing = _feedingScheduleRepository.GetById(id);
         _feedingScheduleRepository.Remove(existing);
     }
-    
+
     /// <summary>
     /// Method for making feeding process in Time.
     /// </summary>

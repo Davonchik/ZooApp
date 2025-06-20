@@ -71,7 +71,7 @@ public class DependencyInjectionTests
 
         // Act
         var dispatcher = provider.GetRequiredService<IDomainEventDispatcher>();
-        var hosted     = provider.GetServices<Microsoft.Extensions.Hosting.IHostedService>();
+        var hosted = provider.GetServices<Microsoft.Extensions.Hosting.IHostedService>();
 
         // Assert
         Assert.NotNull(dispatcher);

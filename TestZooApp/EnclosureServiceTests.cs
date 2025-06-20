@@ -10,14 +10,14 @@ namespace TestZooApp;
 public class EnclosureServiceTests
 {
     private readonly Mock<IEnclosureRepository> _encRepo;
-    private readonly Mock<IAnimalService>       _animalService;
-    private readonly EnclosureService           _svc;
+    private readonly Mock<IAnimalService> _animalService;
+    private readonly EnclosureService _svc;
 
     public EnclosureServiceTests()
     {
-        _encRepo       = new Mock<IEnclosureRepository>();
+        _encRepo = new Mock<IEnclosureRepository>();
         _animalService = new Mock<IAnimalService>();
-        _svc           = new EnclosureService(_encRepo.Object, _animalService.Object);
+        _svc = new EnclosureService(_encRepo.Object, _animalService.Object);
     }
 
     [Fact]
@@ -77,21 +77,21 @@ public class EnclosureServiceTests
     {
         // Arrange
         var id = Guid.NewGuid();
-        
+
         var a1 = new Animal(new Name("A1"), new AnimalType(AnimalTypeValue.Default), DateTime.UtcNow,
                             new Gender(GenderValue.Male), new Food(new Name("F"), new AnimalType(AnimalTypeValue.Default)),
                             new HealthStatus(HealthStatusValue.Healthy));
         var a2 = new Animal(new Name("A2"), new AnimalType(AnimalTypeValue.Default), DateTime.UtcNow,
                             new Gender(GenderValue.Female), new Food(new Name("G"), new AnimalType(AnimalTypeValue.Default)),
                             new HealthStatus(HealthStatusValue.Healthy));
-        
+
         var original = new Enclosure(new Name("Orig"), new Capacity(5), new AnimalType(AnimalTypeValue.Default))
         {
             Id = id
         };
         original.AddAnimal(a1);
         original.AddAnimal(a2);
-        
+
         var updated = new Enclosure(new Name("Upd"), new Capacity(10), new AnimalType(AnimalTypeValue.Default))
         {
             Id = id
@@ -112,10 +112,10 @@ public class EnclosureServiceTests
         // Assert
         _encRepo.Verify(r => r.Update(updated, id), Times.Once);
         _encRepo.Verify(r => r.GetById(id), Times.Exactly(3));
-        
+
         Assert.Contains(a1.Id, result.AnimalIds);
         Assert.Contains(a2.Id, result.AnimalIds);
-        
+
         _animalService.Verify(s => s.GetById(a1.Id), Times.Once);
         _animalService.Verify(s => s.GetById(a2.Id), Times.Once);
     }

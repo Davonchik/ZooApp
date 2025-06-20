@@ -38,21 +38,21 @@ public class EnclosureController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    
+
     [HttpDelete("{id}")]
     public IActionResult Delete(Guid id)
     {
         _enclosureService.DeleteEnclosure(id);
         return NoContent();
     }
-    
+
     [HttpPut("{id}")]
     public IActionResult Update(Guid id, [FromBody] EnclosureRequest request)
     {
         try
         {
             var enclosure = new Enclosure(request.Name, new Capacity(request.MaximumCapacity), request.EnclosureType);
-            
+
             _enclosureService.UpdateEnclosure(id, enclosure);
 
             return Ok(enclosure);
@@ -62,7 +62,7 @@ public class EnclosureController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    
+
     [HttpPost("{id}/clean")]
     public IActionResult Clean(Guid id)
     {

@@ -38,7 +38,7 @@ public class FeedingScheduleWatcherTests
     public async Task RunSingleIteration_DispatchesEventsOnlyForDueAndUncompleted()
     {
         // Arrange
-        var id  = Guid.NewGuid();
+        var id = Guid.NewGuid();
         var due = new FeedingSchedule(
             id,
             new FeedingTime(DateTime.UtcNow.AddSeconds(1)),
@@ -61,14 +61,14 @@ public class FeedingScheduleWatcherTests
         var dispMock = new Mock<IDomainEventDispatcher>();
 
         var watcher = new FeedingScheduleWatcher(repoMock.Object, dispMock.Object);
-        
+
         // Act
         await watcher.StartAsync(default);
-        
+
         await Task.Delay(TimeSpan.FromSeconds(32));
-        
+
         await watcher.StopAsync(default);
-        
+
         // Assert
         dispMock.Verify(d => d.Dispatch(
                 It.Is<IEnumerable<IDomainEvent>>(l =>

@@ -14,13 +14,13 @@ public class AnimalMovedEventHandler : INotificationHandler<AnimalMovedEvent>
     {
         _logger = logger;
     }
-    
+
     public Task Handle(AnimalMovedEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"AnimalMovedEvent received for animal: {notification.Animal}, " +
                                $"{notification.OldEnclosureId},-> {notification.NewEnclosureId}: " +
                                $"time = {notification.OccurredOn}");
-        
+
         return Task.CompletedTask;
     }
 }

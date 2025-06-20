@@ -14,7 +14,7 @@ public class FeedingTimeEventHandler : INotificationHandler<FeedingTimeEvent>
     private readonly IFeedingScheduleRepository _feedingScheduleRepository;
     private readonly ILogger<FeedingTimeEvent> _logger;
 
-    public FeedingTimeEventHandler(IAnimalRepository animalRepository, 
+    public FeedingTimeEventHandler(IAnimalRepository animalRepository,
         IFeedingScheduleRepository feedingScheduleRepository,
         ILogger<FeedingTimeEvent> logger)
     {
@@ -27,15 +27,15 @@ public class FeedingTimeEventHandler : INotificationHandler<FeedingTimeEvent>
     {
         var animal = _animalRepository.GetById(notification.FeedingSchedule.AnimalId);
         animal.Feed();
-        
+
         _logger.LogInformation($"Animal {animal.Name} was fed at {notification.OccurredOn} with " +
                                $"{notification.FeedingSchedule.Food}");
-        
+
         var schedule = _feedingScheduleRepository.GetById(notification.FeedingSchedule.Id);
         schedule.MarkAsCompleted();
-        
+
         _feedingScheduleRepository.Update(schedule, notification.FeedingSchedule.Id);
-        
+
         return Task.CompletedTask;
     }
 }

@@ -31,7 +31,7 @@ public class AnimalService : IAnimalService
     {
         return _animalRepository.GetAll();
     }
-    
+
     /// <summary>
     /// Method for getting animal by ID.
     /// </summary>
@@ -74,7 +74,7 @@ public class AnimalService : IAnimalService
         _animalRepository.Update(newAnimalModel, animalId);
         return true;
     }
-    
+
     /// <summary>
     /// Method for healing animal.
     /// </summary>
@@ -88,7 +88,7 @@ public class AnimalService : IAnimalService
         {
             throw new Exception($"The animal {id} is already healed.");
         }
-        
+
         animal.Heal();
     }
 
@@ -99,7 +99,7 @@ public class AnimalService : IAnimalService
     public void Feed(Guid id)
     {
         var animal = _animalRepository.GetById(id);
-        
+
         animal.Feed();
     }
 
@@ -111,15 +111,15 @@ public class AnimalService : IAnimalService
     {
         var animal = _animalRepository.GetById(id);
         var enclosure = _enclosureRepository.GetAll().FirstOrDefault(enclosure => enclosure.AnimalIds.Contains(id));
-        
-        
+
+
         var currentSchedules = _feedingScheduleRepository.GetAll()
             .Where(schedule => schedule.AnimalId == id).ToList();
-        
+
         if (enclosure != null)
             enclosure.RemoveAnimal(id);
-        
-        
+
+
         if (currentSchedules.Any())
         {
             foreach (var sch in currentSchedules)
@@ -127,7 +127,7 @@ public class AnimalService : IAnimalService
                 _feedingScheduleRepository.Remove(sch);
             }
         }
-        
+
         _animalRepository.Remove(animal);
     }
 }

@@ -19,7 +19,7 @@ public class Gender : IEquatable<Gender>
         if (other == null) return false;
         return Value == other.Value;
     }
-    
+
     public override bool Equals(object obj) => Equals(obj as Gender);
     public override int GetHashCode() => Value.GetHashCode();
     public override string ToString() => Value.ToString();

@@ -11,20 +11,20 @@ namespace ZooApplication.Domain.Entities;
 public class Animal : EventEntity
 {
     public Guid Id { get; set; }
-    
+
     public Name Name { get; private set; }
-    
+
     public AnimalType Species { get; set; }
-    
+
     public DateTime BirthDate { get; private set; }
-    
+
     public Gender Gender { get; private set; }
-    
+
     public Food FavoriteFood { get; private set; }
-    
+
     public HealthStatus HealthStatus { get; private set; }
 
-    public Animal(Name name, AnimalType species, DateTime birthDate, Gender gender, Food favoriteFood, 
+    public Animal(Name name, AnimalType species, DateTime birthDate, Gender gender, Food favoriteFood,
         HealthStatus healthStatusValue)
     {
         Id = Guid.NewGuid();
@@ -56,7 +56,7 @@ public class Animal : EventEntity
         }
         return false;
     }
-    
+
     /// <summary>
     /// Move Event Method.
     /// </summary>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BzxEJHacatw=",
+  "dgSpecHash": "TatV/cKLa3I=",
   "success": true,
-  "projectFilePath": "/Users/dgaslanian/Desktop/HSE/C#_projects/ZooApp/ZooApplication/ZooApplication.csproj",
+  "projectFilePath": "/Users/dgaslanian/Desktop/ZooApp1/ZooApplication/ZooApplication.csproj",
   "expectedPackageFiles": [
     "/Users/dgaslanian/.nuget/packages/mediatr/12.5.0/mediatr.12.5.0.nupkg.sha512",
     "/Users/dgaslanian/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",

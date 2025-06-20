@@ -21,7 +21,7 @@ public class Name : IEquatable<Name>
         if (otherName == null) return false;
         return Value == otherName.Value;
     }
-    
+
     public override bool Equals(object obj) => Equals(obj as Name);
     public override int GetHashCode() => Value.GetHashCode();
     public override string ToString() => Value;

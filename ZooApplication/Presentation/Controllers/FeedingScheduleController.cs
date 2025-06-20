@@ -42,7 +42,7 @@ namespace ZooApplication.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpPut("{id}/reschedule")]
         public IActionResult Reschedule(Guid id, [FromBody] RescheduleFeedingRequest request)
         {
@@ -60,7 +60,7 @@ namespace ZooApplication.Presentation.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         [HttpPut("{id}")]
         public IActionResult Update(Guid id, [FromBody] FeedingScheduleRequest request)
         {
@@ -71,9 +71,9 @@ namespace ZooApplication.Presentation.Controllers
                     new FeedingTime(request.FeedingTime),
                     new Food(new Name(request.Food), new AnimalType(AnimalTypeValue.Default))
                 );
-                
+
                 _feedingOrganizationService.UpdateSchedule(newModel, id);
-                
+
                 var updated = _feedingOrganizationService.GetById(id);
                 return Ok(updated);
             }
@@ -82,7 +82,7 @@ namespace ZooApplication.Presentation.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
@@ -96,7 +96,7 @@ namespace ZooApplication.Presentation.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         [HttpPost("{id}/complete")]
         public IActionResult Complete(Guid id)
         {

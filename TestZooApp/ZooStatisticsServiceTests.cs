@@ -9,16 +9,16 @@ namespace TestZooApp;
 
 public class ZooStatisticsServiceTests
 {
-    private readonly Mock<IAnimalRepository>           _animalRepo;
-    private readonly Mock<IEnclosureRepository>        _enclosureRepo;
+    private readonly Mock<IAnimalRepository> _animalRepo;
+    private readonly Mock<IEnclosureRepository> _enclosureRepo;
     private readonly Mock<IFeedingScheduleRepository> _schedRepo;
-    private readonly ZooStatisticsService              _svc;
+    private readonly ZooStatisticsService _svc;
 
     public ZooStatisticsServiceTests()
     {
-        _animalRepo    = new Mock<IAnimalRepository>();
+        _animalRepo = new Mock<IAnimalRepository>();
         _enclosureRepo = new Mock<IEnclosureRepository>();
-        _schedRepo     = new Mock<IFeedingScheduleRepository>();
+        _schedRepo = new Mock<IFeedingScheduleRepository>();
 
         _svc = new ZooStatisticsService(
             _animalRepo.Object,

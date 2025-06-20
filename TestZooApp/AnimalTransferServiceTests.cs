@@ -10,16 +10,16 @@ namespace TestZooApp;
 
 public class AnimalTransferServiceTests
 {
-    private readonly Mock<IAnimalRepository>      _animalRepo;
-    private readonly Mock<IEnclosureRepository>   _enclosureRepo;
+    private readonly Mock<IAnimalRepository> _animalRepo;
+    private readonly Mock<IEnclosureRepository> _enclosureRepo;
     private readonly Mock<IDomainEventDispatcher> _dispatcher;
-    private readonly AnimalTransferService        _svc;
+    private readonly AnimalTransferService _svc;
 
     public AnimalTransferServiceTests()
     {
-        _animalRepo    = new Mock<IAnimalRepository>();
+        _animalRepo = new Mock<IAnimalRepository>();
         _enclosureRepo = new Mock<IEnclosureRepository>();
-        _dispatcher    = new Mock<IDomainEventDispatcher>();
+        _dispatcher = new Mock<IDomainEventDispatcher>();
 
         _svc = new AnimalTransferService(
             _animalRepo.Object,

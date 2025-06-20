@@ -29,7 +29,7 @@ public class AnimalTransferService : IAnimalTransferService
     public void TransferAnimal(Guid animalId, Guid targetEnclosureId)
     {
         var animal = _animalRepository.GetById(animalId);
-    
+
         var targetEnclosure = _enclosureRepository.GetById(targetEnclosureId);
 
         if (animal.Species.Value != targetEnclosure.EnclosureType.Value)
@@ -37,7 +37,7 @@ public class AnimalTransferService : IAnimalTransferService
             throw new ArgumentException("Type mismatch!");
         }
         var old = _enclosureRepository.GetAll().FirstOrDefault(x => x.AnimalIds.Contains(animalId));
-    
+
 
         if (old != null && targetEnclosure.CurrentAnimalCount + 1 <= targetEnclosure.MaximumCapacity.Value)
         {

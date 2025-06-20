@@ -12,7 +12,7 @@ public class Enclosure : EventEntity
     private readonly List<Guid> _animalIds = [];
     public Guid Id { get; set; }
     public Name Name { get; private set; }
-    public AnimalType EnclosureType { get; set; } 
+    public AnimalType EnclosureType { get; set; }
     public Capacity MaximumCapacity { get; private set; }
     public DateTime LastCleaned { get; private set; } = DateTime.UtcNow;
     public IReadOnlyCollection<Guid> AnimalIds => _animalIds.AsReadOnly();
@@ -37,7 +37,7 @@ public class Enclosure : EventEntity
         {
             throw new ArgumentException("Type mismatch!");
         }
-        
+
         if (CurrentAnimalCount >= MaximumCapacity.Value)
         {
             throw new InvalidOperationException("Cannot add more animals to enclosure!");
@@ -47,7 +47,7 @@ public class Enclosure : EventEntity
         {
             throw new InvalidOperationException("Animal is already in this enclosure!");
         }
-        
+
         _animalIds.Add(animal.Id);
     }
 

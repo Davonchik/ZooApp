@@ -21,7 +21,7 @@ public class FeedingTime : IEquatable<FeedingTime>
         if (other == null) return false;
         return Value.Equals(other.Value);
     }
-    
+
     public override bool Equals(object obj) => Equals(obj as FeedingTime);
     public override int GetHashCode() => Value.GetHashCode();
     public override string ToString() => Value.ToString("o");

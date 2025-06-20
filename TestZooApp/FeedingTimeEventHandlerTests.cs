@@ -18,48 +18,49 @@ public class FeedingTimeEventHandlerTests
             DateTime.UtcNow.AddYears(-2),
             new Gender(GenderValue.Male),
             new Food(new Name("Meat"), new AnimalType(AnimalTypeValue.Predator)),
-            new HealthStatus(HealthStatusValue.Healthy)) { Id = id };
+            new HealthStatus(HealthStatusValue.Healthy))
+        { Id = id };
 
     private static FeedingSchedule MakeSchedule(Guid animalId) =>
         new(
             animalId,
             new FeedingTime(DateTime.UtcNow.AddMinutes(1)),
             new Food(new Name("Meat"), new AnimalType(AnimalTypeValue.Predator)));
-    
+
     [Fact]
     public async Task Handle_FeedsAnimal_LogsAndMarksScheduleCompleted()
     {
         // Arrange
-        var animalId  = Guid.NewGuid();
-        var animal    = MakeAnimal(animalId);
-        var schedule  = MakeSchedule(animalId);
+        var animalId = Guid.NewGuid();
+        var animal = MakeAnimal(animalId);
+        var schedule = MakeSchedule(animalId);
 
-        var aniRepoMock   = new Mock<IAnimalRepository>();
+        var aniRepoMock = new Mock<IAnimalRepository>();
         aniRepoMock.Setup(r => r.GetById(animalId)).Returns(animal);
 
-        var schRepoMock   = new Mock<IFeedingScheduleRepository>();
+        var schRepoMock = new Mock<IFeedingScheduleRepository>();
         schRepoMock.Setup(r => r.GetById(schedule.Id)).Returns(schedule);
 
-        var loggerMock    = new Mock<ILogger<FeedingTimeEvent>>();
+        var loggerMock = new Mock<ILogger<FeedingTimeEvent>>();
 
         var handler = new FeedingTimeEventHandler(
             aniRepoMock.Object,
             schRepoMock.Object,
             loggerMock.Object);
 
-        var evt      = new FeedingTimeEvent(schedule);
-        var token    = CancellationToken.None;
+        var evt = new FeedingTimeEvent(schedule);
+        var token = CancellationToken.None;
 
         // Act
         await handler.Handle(evt, token);
 
         // Assert
         aniRepoMock.Verify(r => r.GetById(animalId), Times.Once);
-        
-        schRepoMock.Verify(r => r.GetById(schedule.Id),            Times.Once);
-        schRepoMock.Verify(r => r.Update(schedule, schedule.Id),   Times.Once);
+
+        schRepoMock.Verify(r => r.GetById(schedule.Id), Times.Once);
+        schRepoMock.Verify(r => r.Update(schedule, schedule.Id), Times.Once);
         Assert.True(schedule.IsCompleted);
-        
+
         loggerMock.Verify(l =>
             l.Log(
                 LogLevel.Information,

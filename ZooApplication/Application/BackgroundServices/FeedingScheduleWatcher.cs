@@ -18,7 +18,7 @@ public class FeedingScheduleWatcher : BackgroundService
         _feedingScheduleRepository = feedingScheduleRepository;
         _domainEventDispatcher = domainEventDispatcher;
     }
-    
+
     /// <summary>
     /// Runs a background loop that every 30 seconds checks all pending feeding schedules,
     /// and for each schedule whose time has arrived or passed, publishes "FeedingTimeEvent".
@@ -33,12 +33,12 @@ public class FeedingScheduleWatcher : BackgroundService
             var times = _feedingScheduleRepository.GetAll()
                 .Where(t => !t.IsCompleted && t.FeedingTime.Value <= now)
                 .ToList();
-            
+
             foreach (var time in times)
             {
                 _domainEventDispatcher.Dispatch([new FeedingTimeEvent(time)]);
             }
-            
+
             await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
         }
     }

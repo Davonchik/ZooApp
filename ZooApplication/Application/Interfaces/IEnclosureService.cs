@@ -14,7 +14,7 @@ public interface IEnclosureService
     Enclosure CreateEnclosure(Enclosure enclosure);
 
     Enclosure UpdateEnclosure(Guid id, Enclosure updatedModel);
-    
+
     void DeleteEnclosure(Guid enclosureId);
 
     Enclosure CleanEnclosure(Guid id);

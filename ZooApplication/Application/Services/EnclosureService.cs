@@ -10,7 +10,7 @@ public class EnclosureService : IEnclosureService
 {
     private readonly IEnclosureRepository _enclosureRepository;
     private readonly IAnimalService _animalService;
-    
+
     public EnclosureService(IEnclosureRepository enclosureRepository, IAnimalService animalService)
     {
         _enclosureRepository = enclosureRepository;
@@ -46,7 +46,7 @@ public class EnclosureService : IEnclosureService
         _enclosureRepository.Add(enclosure);
         return enclosure;
     }
-    
+
     /// <summary>
     /// Method for updating info about enclosure.
     /// </summary>
@@ -56,19 +56,19 @@ public class EnclosureService : IEnclosureService
     public Enclosure UpdateEnclosure(Guid id, Enclosure updatedModel)
     {
         var animalsIds = _enclosureRepository.GetById(id).AnimalIds.ToList();
-            
+
         _enclosureRepository.Update(updatedModel, id);
-            
+
         var newEnclosure = _enclosureRepository.GetById(id);
-            
+
         foreach (var animalId in animalsIds)
         {
             newEnclosure.AddAnimal(_animalService.GetById(animalId));
         }
-            
+
         return _enclosureRepository.GetById(id);
     }
-    
+
     /// <summary>
     /// Method for enclosure deletion.
     /// </summary>
@@ -79,7 +79,7 @@ public class EnclosureService : IEnclosureService
         var enclosure = _enclosureRepository.GetById(enclosureId);
         if (enclosure == null)
             throw new Exception("Enclosure not found!");
-        
+
         var animalsCopy = enclosure.AnimalIds.ToList();
 
         foreach (var animalId in animalsCopy)
@@ -89,7 +89,7 @@ public class EnclosureService : IEnclosureService
 
         _enclosureRepository.Remove(enclosure);
     }
-    
+
     /// <summary>
     /// Method for cleaning.
     /// </summary>

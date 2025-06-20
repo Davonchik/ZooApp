@@ -21,7 +21,7 @@ public class Capacity : IEquatable<Capacity>
         if (otherCapacity == null) return false;
         return Value == otherCapacity.Value;
     }
-    
+
     public override bool Equals(object obj) => Equals(obj as Capacity);
     public override int GetHashCode() => Value.GetHashCode();
     public override string ToString() => Value.ToString();
