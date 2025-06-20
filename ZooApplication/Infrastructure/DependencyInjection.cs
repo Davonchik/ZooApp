@@ -40,7 +40,6 @@ public static class DependencyInjection
         services.AddScoped<IEnclosureService, EnclosureService>();
         services.AddScoped<IFeedingOrganizationService, FeedingOrganizationService>();
         services.AddScoped<IZooStatisticsService, ZooStatisticsService>();
-        return services;     
-              
+        return services;
     }
 }
